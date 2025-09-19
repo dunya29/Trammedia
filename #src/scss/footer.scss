@@ -1,4 +1,22 @@
 .footer {
+    &__top {
+        padding: 40px 0;
+        border-top: 1px solid var(--primary-color);
+    }
+    &__r {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: start;
+        gap: 40px 16px;
+    }
+    &__nav {
+        ul li {
+            margin-bottom: 10px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
     &__bottom {
         padding: 20px 0;
         display: grid;
@@ -16,5 +34,37 @@
     }
     &__txt {
         align-self: center;
+    }
+    @media (max-width: $bp1) {
+        &__top {
+            padding: 30px 0;
+        }
+    }
+    @media (min-width: $bp4) and (max-width: $bp3) {
+        .page-grid {
+            grid-template-columns: 1fr 3fr;
+        }
+    }
+    @media (max-width: $bp4) {
+        .page-up {
+            align-self: end;
+            grid-area: 2/2/3/3;
+        }
+        &__top {
+            padding: 16px 0;
+        }
+        &__l {
+            padding-top: 16px;
+            border-top: 1px solid var(--primary-color);
+            order: 1;
+        }
+        &__nav {
+            grid-column: 1/3;
+        }
+        &__logo {
+            img {
+                margin: auto;
+            }
+        }
     }
 }

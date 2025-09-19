@@ -1,7 +1,6 @@
 html,
 body {
 	height: 100%;
-	scroll-behavior: smooth;
 }
 html,
 body,
@@ -40,11 +39,15 @@ body {
 	display: flex;
 	flex-direction: column;
 	&.animate {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
 		transform-style: preserve-3d;
 		perspective: 2000px;
 		will-change: transform;
 		transform-origin: 50% 10%;
-		transform: translate3d(0px, 90vh, 0px) scale3d(0.4, 0.4, 1) rotateX(0deg) rotateY(0deg) rotateZ(720deg);
+		transform: translate3d(0px, 25vw, 0px) scale3d(0.4, 0.4, 1) rotateX(0deg) rotateY(0deg) rotateZ(720deg);
 		transition: all 1s ease-in-out;
 	}
 	@media (max-width: $bp4) {
@@ -614,5 +617,14 @@ blockquote {
 .mob-hidden {
 	@media (max-width: $bp4) {
 		display: none;
+	}
+}
+.page-up {
+	display: flex;
+	align-items: center;
+	svg {
+		width: 13px;
+		height: 13px;
+		margin-left: 10px;
 	}
 }

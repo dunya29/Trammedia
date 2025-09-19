@@ -1,3 +1,31 @@
+.header,
+.footer {
+    &__logo {
+        img {
+            width: 295px;
+        }
+    }
+    &__nav-title,
+    &__soc a {
+        font-size: 16px;
+        color: var(--gray-color);
+    }
+    &__nav-title {
+        font-family: var(--font-family-heading);
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+    @media (max-width: $bp2) {
+        &__logo img {
+            width: 255px;
+        }
+    }
+    @media (max-width: $bp3) {
+        &__logo img {
+            width: 203px;
+        }
+    }
+}
 .header {
     background: var(--light-gray-color);
     position: fixed;
@@ -7,7 +35,7 @@
     z-index: 501;
     transition: transform 0.4s ease-out;
     &.scroll {
-        &.unshow  {
+        &.unshow {
             transform: translateY(-100%);
         }
         .header__left,
@@ -28,7 +56,6 @@
     }
     &__logo {
         img {
-            width: 295px;
             transition: all 0.3s linear;
         }
     }
@@ -96,9 +123,6 @@
         &__right {
             font-size: 16px;
         }
-        &__logo img {
-            width: 255px;
-        }
         &__nav {
             ul {
                 margin: -8px -32px;
@@ -136,7 +160,6 @@
         }
         &__logo {
             img {
-                width: 203px;
                 margin: 0 auto;
             }
         }
@@ -152,7 +175,7 @@
             z-index: 1;
         }
         &__bottom {
-            padding-top:var(--main-offset);
+            padding-top: var(--main-offset);
             position: fixed;
             top: 0px;
             left: 0px;
@@ -202,19 +225,9 @@
         &__soc {
             transform: translateY(-30px);
         }
-        &__nav-title,
-        &__soc a {
-            font-size: 16px;
-            color: var(--gray-color);
-        }
-        &__nav-title {
-            font-family: var(--font-family-heading);
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
         &__soc {
             margin-top: 40px;
-        }
+        } 
     }
 }
 .icon-menu {

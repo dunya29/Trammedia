@@ -9,4 +9,7 @@
     <svg id="ext-link" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 12" fill="none">
         <path d="M3.87988 0.75H11.8799M11.8799 0.75V8.25M11.8799 0.75L0.879883 11.25"/>
     </svg>
+    <svg id="btn-top" xmlns="http://www.w3.org/2000/svg" width="13" height="15" viewBox="0 0 13 15" fill="none">
+        <path d="M1 6.75049L6.5 1.25M6.5 1.25L12.0005 6.75049M6.5 1.25V14.7505" stroke="#8A2A2B" />
+    </svg>
 </svg>

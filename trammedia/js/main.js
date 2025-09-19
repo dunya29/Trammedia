@@ -26,7 +26,20 @@ function sprite(id) {
 function scrollPos() {
     return window.pageYOffset || document.documentElement.scrollTop
 }
-
+function checkIOS() {
+    let platform = navigator.platform;
+    let userAgent = navigator.userAgent;
+    return (
+        // iPhone, iPod, iPad
+        /(iPhone|iPod|iPad)/i.test(platform) ||
+        // iPad на iOS 13+
+        (platform === 'MacIntel' && navigator.maxTouchPoints > 1 && !window.MSStream) ||
+        // User agent проверка
+        (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream)
+    );
+}
+let isIOS = checkIOS()
+let firstLoad = true
 //enable scroll
 function enableScroll() {
     if (!document.querySelector(".modal.open")) {
@@ -35,6 +48,15 @@ function enableScroll() {
         }
         document.body.style.paddingRight = '0px'
         document.body.classList.remove("no-scroll")
+
+        // для IOS
+        if (isIOS && !firstLoad) {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            let scrollY = document.body.dataset.scrollY;
+            window.scrollTo(0, parseInt(scrollY || '0'));
+        }
     }
 }
 //disable scroll
@@ -46,6 +68,15 @@ function disableScroll() {
         }
         document.body.style.paddingRight = paddingValue
         document.body.classList.add("no-scroll");
+
+        // для IOS
+        if (isIOS && !firstLoad) {
+            let scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.dataset.scrollY = scrollY;
+        }
     }
 }
 //smoothdrop
@@ -434,8 +465,6 @@ function animate() {
     });
 }
 document.addEventListener("DOMContentLoaded", () => {
-    enableScroll()
-    disableScroll()
     const wrap = document.querySelector('.wrap');
     const vw = window.innerWidth / 100;
     let timeOut = window.innerWidth > bp.tablet ? 1000 : 0
@@ -471,7 +500,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }, timeOut);
         }, 1000);
-    }, 1000);
+    }, 1000); 
 });
-gsap.delayedCall(3000, () => ScrollTrigger.refresh(true));
+window.addEventListener("resize", () => {
+    gsap.delayedCall(1000, () => ScrollTrigger.refresh(true));
+})
 
