@@ -438,8 +438,9 @@ document.addEventListener("DOMContentLoaded", () => {
     disableScroll()
     const wrap = document.querySelector('.wrap');
     const vw = window.innerWidth / 100;
+    let timeOut = window.innerWidth > bp.tablet ? 1000 : 0
     setTimeout(() => {
-        wrap.style.transform = `translate3d(0, ${1 * vw}px, 0) scale(0.4) rotateZ(720deg)`;
+        wrap.style.transform = window.innerWidth > bp.tablet ? `translate3d(0, ${1 * vw}px, 0) scale(0.4) rotateZ(720deg)` : `translate3d(0, 0, 0)`
         setTimeout(() => {
             wrap.style.transform = `translate3d(0, 0px, 0) scale(1) rotateZ(0deg)`;
             setTimeout(() => {
@@ -468,7 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     })
                 }
-            }, 1000);
+            }, timeOut);
         }, 1000);
     }, 1000);
 });

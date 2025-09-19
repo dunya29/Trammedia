@@ -44,8 +44,13 @@ body {
 		perspective: 2000px;
 		will-change: transform;
 		transform-origin: 50% 10%;
-		transform: translate3d(0px, 95vh, 0px) scale3d(0.4, 0.4, 1) rotateX(0deg) rotateY(0deg) rotateZ(720deg);
+		transform: translate3d(0px, 90vh, 0px) scale3d(0.4, 0.4, 1) rotateX(0deg) rotateY(0deg) rotateZ(720deg);
 		transition: all 1s ease-in-out;
+	}
+	@media (max-width: $bp4) {
+		&.animate {
+			transform: translate3d(0px, 95vh, 0px) ;
+		}
 	}
 }
 .no-scroll {

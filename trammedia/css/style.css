@@ -344,8 +344,8 @@ body {
   -webkit-transform-origin: 50% 10%;
   -ms-transform-origin: 50% 10%;
   transform-origin: 50% 10%;
-  -webkit-transform: translate3d(0px, 95vh, 0px) scale3d(0.4, 0.4, 1) rotateX(0deg) rotateY(0deg) rotateZ(720deg);
-  transform: translate3d(0px, 95vh, 0px) scale3d(0.4, 0.4, 1) rotateX(0deg) rotateY(0deg) rotateZ(720deg);
+  -webkit-transform: translate3d(0px, 90vh, 0px) scale3d(0.4, 0.4, 1) rotateX(0deg) rotateY(0deg) rotateZ(720deg);
+  transform: translate3d(0px, 90vh, 0px) scale3d(0.4, 0.4, 1) rotateX(0deg) rotateY(0deg) rotateZ(720deg);
   -webkit-transition: all 1s ease-in-out;
   transition: all 1s ease-in-out;
 }
@@ -2157,6 +2157,11 @@ blockquote footer p {
 }
 
 @media (max-width: 767.98px) {
+  .wrap.animate {
+    -webkit-transform: translate3d(0px, 95vh, 0px);
+    transform: translate3d(0px, 95vh, 0px);
+  }
+
   h1,
   .h1 {
     font-size: 49px;
