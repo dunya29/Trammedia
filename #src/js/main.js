@@ -438,21 +438,21 @@ document.addEventListener("DOMContentLoaded", () => {
     disableScroll()
     const wrap = document.querySelector('.wrap');
     const vw = window.innerWidth / 100;
-    wrap.style.transform = `translate3d(0, ${1 * vw}px, 0) scale(0.4) rotateZ(720deg)`;
     setTimeout(() => {
-        wrap.style.transform = `translate3d(0, 0px, 0) scale(1) rotateZ(0deg)`;
+        wrap.style.transform = `translate3d(0, ${1 * vw}px, 0) scale(0.4) rotateZ(720deg)`;
         setTimeout(() => {
-            wrap.classList.remove('animate')
-            wrap.style.transform = 'none'
-            enableScroll()
-            ScrollTrigger.refresh(true);
-            animate()
-            window.addEventListener("scroll", animate) 
-            // authors animation
-            if (authorsSticky && authorsMainSwiper) {
-                let slideCount = document.querySelectorAll(".authors__mainswiper .swiper-slide").length
-                let activeIndex = { value: 0 }
-                setTimeout(() => {
+            wrap.style.transform = `translate3d(0, 0px, 0) scale(1) rotateZ(0deg)`;
+            setTimeout(() => {
+                wrap.classList.remove('animate')
+                wrap.style.transform = 'none'
+                enableScroll()
+                ScrollTrigger.refresh(true);
+                animate()
+                window.addEventListener("scroll", animate)
+                // authors animation
+                if (authorsSticky && authorsMainSwiper) {
+                    let slideCount = document.querySelectorAll(".authors__mainswiper .swiper-slide").length
+                    let activeIndex = { value: 0 }
                     gsap.to(activeIndex, {
                         value: slideCount - 1,
                         scrollTrigger: {
@@ -467,54 +467,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             },
                         }
                     })
-                }, 1000);
-            }
+                }
+            }, 1000);
         }, 1000);
     }, 1000);
-    setTimeout(() => {
-        /* gsap.timeline()
-            .to(wrap, {
-                y: 0,
-                scale: 1,
-                rotationZ: 0,
-                duration: 1,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    wrap.style.transform = 'none'
-                    enableScroll();
-                    ScrollTrigger.refresh(true); 
-                    if (authorsSticky && authorsMainSwiper) {
-                        let slideCount = document.querySelectorAll(".authors__mainswiper .swiper-slide").length
-                        let activeIndex = { value: 0 }
-                        setTimeout(() => {
-                            gsap.to(activeIndex, {
-                                value: slideCount - 1,
-                                scrollTrigger: {
-                                    trigger: ".authors__sticky",
-                                    start: "center center",
-                                    end: "+=" + 300 * slideCount,
-                                    pin: true,
-                                    scrub: true,
-                                    invalidateOnRefresh: true,
-                                    onUpdate: (self) => {
-                                        authorsMainSwiper.slideTo(Math.round(activeIndex.value))
-                                    },
-                                }
-                            })
-                        }, 1000);
-                    }
-                }
-            }) */
-
-        /*  document.querySelector('.wrap').style.transition = 'all 1s ease-in-out'
-         document.querySelector('.wrap').style.transform = `translate3d(0, 0px, 0) scale(1) rotateZ(0deg)`;
-         setTimeout(() => {
-             enableScroll()
-             document.querySelector('.wrap').style.transform = 'none'
-             gsap.delayedCall(1000, () => ScrollTrigger.refresh());
-         }, 2000); */
-    }, 1000);
-
 });
 gsap.delayedCall(3000, () => ScrollTrigger.refresh(true));
 
