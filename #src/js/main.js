@@ -1,0 +1,520 @@
+if (document.querySelector(".preloader")) {
+    window.addEventListener("load", (event) => {
+        setTimeout(() => {
+            enableScroll()
+            document.body.classList.add('loaded');
+        }, 100);
+    });
+}
+const header = document.querySelector(".header")
+const mobMenu = document.querySelector(".header__bottom")
+const iconMenu = document.querySelector('.icon-menu');
+const modal = document.querySelectorAll(".modal")
+let animSpd = 400
+let bp = {
+    largeDesktop: 1450.98,
+    desktop: 1250.98,
+    laptop: 1000.98,
+    tablet: 767.98,
+    phone: 575.98
+}
+//get path to sprite id
+function sprite(id) {
+    return '<svg><use xlink:href="img/svg/sprite.svg#' + id + '"></use></svg>'
+}
+//scroll pos
+function scrollPos() {
+    return window.pageYOffset || document.documentElement.scrollTop
+}
+
+//enable scroll
+function enableScroll() {
+    if (!document.querySelector(".modal.open")) {
+        if (document.querySelectorAll(".fixed-block")) {
+            document.querySelectorAll(".fixed-block").forEach(block => block.style.paddingRight = '0px')
+        }
+        document.body.style.paddingRight = '0px'
+        document.body.classList.remove("no-scroll")
+    }
+}
+//disable scroll
+function disableScroll() {
+    if (!document.querySelector(".modal.open")) {
+        let paddingValue = window.innerWidth > 350 ? window.innerWidth - document.documentElement.clientWidth + 'px' : 0
+        if (document.querySelector(".fixed-block")) {
+            document.querySelectorAll(".fixed-block").forEach(block => block.style.paddingRight = paddingValue)
+        }
+        document.body.style.paddingRight = paddingValue
+        document.body.classList.add("no-scroll");
+    }
+}
+//smoothdrop
+function smoothDrop(header, body, dur = false) {
+    let animDur = dur ? dur : 500
+    body.style.overflow = 'hidden';
+    body.style.transition = `height ${animDur}ms ease`;
+    body.style['-webkit-transition'] = `height ${animDur}ms ease`;
+    if (!header.classList.contains("active")) {
+        header.parentNode.classList.add("active")
+        header.parentNode.setAttribute('aria-expanded', true)
+        body.style.display = 'block';
+        let height = body.clientHeight + 'px';
+        body.style.height = '0px';
+        body.setAttribute('aria-hidden', false)
+        setTimeout(function () {
+            body.style.height = height;
+            setTimeout(() => {
+                body.style.height = null
+                header.classList.add("active")
+            }, animDur);
+        }, 0);
+    } else {
+        header.parentNode.classList.remove("active")
+        header.parentNode.setAttribute('aria-expanded', false)
+        let height = body.clientHeight + 'px';
+        body.style.height = height
+        body.setAttribute('aria-hidden', true)
+        setTimeout(function () {
+            body.style.height = "0"
+            setTimeout(() => {
+                body.style.display = 'none';
+                body.style.height = null
+                header.classList.remove("active")
+            }, animDur);
+        }, 0);
+    }
+}
+//tabSwitch
+function tabSwitch(nav, block) {
+    nav.forEach((item, idx) => {
+        item.addEventListener("click", () => {
+            nav.forEach(el => {
+                el.classList.remove("active")
+                el.setAttribute("aria-selected", false)
+            })
+            item.classList.add("active")
+            item.setAttribute("aria-selected", true)
+            block.forEach(el => {
+                if (el.dataset.block === item.dataset.tab) {
+                    if (!el.classList.contains("active")) {
+                        el.classList.add("active")
+                        el.style.opacity = "0"
+                        setTimeout(() => {
+                            el.style.opacity = "1"
+                        }, 0);
+                    }
+                } else {
+                    el.classList.remove("active")
+                }
+            })
+        })
+    });
+}
+// tabs scroll btn
+const tabsScroll = document.querySelectorAll(".tabs-scroll")
+function tabsBtnVisibility(item) {
+    let scrollW = item.querySelector(".tabs").scrollWidth
+    let clientW = item.querySelector(".tabs").clientWidth
+    let scrollLeft = item.querySelector(".tabs").scrollLeft
+    scrollW - clientW - scrollLeft > 5 ? item.classList.add("show-btn") : item.classList.remove("show-btn")
+}
+if (tabsScroll.length) {
+    tabsScroll.forEach(item => {
+        tabsBtnVisibility(item)
+        item.querySelector(".tabs").addEventListener("scroll", () => tabsBtnVisibility(item))
+        window.addEventListener("resize", tabsBtnVisibility(item))
+        if (item.querySelector(".tabs-scroll__btn")) {
+            item.querySelector(".tabs-scroll__btn").addEventListener("click", e => {
+                let findActiveIdx = Array.from(item.querySelectorAll("[data-tab]")).findIndex(item => item.classList.contains("active"))
+                if (findActiveIdx < item.querySelectorAll("[data-tab]").length - 1) {
+                    item.querySelectorAll("[data-tab]")[findActiveIdx + 1].click()
+                }
+            })
+        }
+    });
+}
+// custom scroll FF
+const customScroll = document.querySelectorAll(".custom-scroll")
+let isFirefox = typeof InstallTrigger !== 'undefined';
+if (isFirefox) {
+    document.documentElement.style.scrollbarColor = "#8a2a2b #f1f2f2"
+}
+if (isFirefox && customScroll) {
+    customScroll.forEach(item => { item.style.scrollbarColor = "#8a2a2b #f1f2f2" })
+}
+//anchor
+const anchorLinks = document.querySelectorAll(".js-anchor")
+if (anchorLinks.length) {
+    anchorLinks.forEach(item => {
+        item.addEventListener("click", e => {
+            let idx = item.getAttribute("href").indexOf("#")
+            const href = item.getAttribute("href").substring(idx)
+            let dest = document.querySelector(href)
+            if (dest) {
+                e.preventDefault()
+                let destPos = dest.getBoundingClientRect().top < 0 ? dest.getBoundingClientRect().top - header.clientHeight - 10 : dest.getBoundingClientRect().top - 10
+                if (iconMenu.classList.contains("active")) {
+                    iconMenu.click()
+                    setTimeout(() => {
+                        window.scrollTo({ top: scrollPos() + destPos, behavior: 'smooth' })
+                    }, 300);
+                } else {
+                    window.scrollTo({ top: scrollPos() + destPos, behavior: 'smooth' })
+                }
+            }
+        })
+    })
+}
+//fixed header
+let lastScroll = scrollPos();
+window.addEventListener("scroll", () => {
+    if (scrollPos() > 1) {
+        header.classList.add("scroll")
+        if (header.classList.contains("header--main")) {
+            header.classList.remove("header--light")
+        }
+        if ((scrollPos() > lastScroll && scrollPos() > 150 && !header.classList.contains("unshow"))) {
+            header.classList.add("unshow")
+        } else if (scrollPos() < lastScroll && header.classList.contains("unshow")) {
+            header.classList.remove("unshow")
+        }
+    } else {
+        header.classList.remove("scroll")
+        header.classList.remove("unshow")
+        if (header.classList.contains("header--main")) {
+            header.classList.add("header--light")
+        }
+    }
+    lastScroll = scrollPos()
+})
+//switch active tab/block
+const switchBlock = document.querySelectorAll(".switch-block")
+if (switchBlock) {
+    switchBlock.forEach(item => {
+        tabSwitch(item.querySelectorAll("[data-tab]"), item.querySelectorAll("[data-block]"))
+    })
+}
+//open modal
+function openModal(modal) {
+    let activeModal = document.querySelector(".modal.open")
+    disableScroll()
+    if (activeModal) {
+        activeModal.classList.remove("open")
+    }
+    modal.classList.add("open")
+}
+//close modal
+function closeModal(modal) {
+    modal.classList.remove("open")
+    setTimeout(() => {
+        enableScroll()
+    }, animSpd);
+}
+// modal click outside
+if (modal) {
+    modal.forEach((mod) => {
+        mod.addEventListener("click", (e) => {
+            if (!mod.querySelector(".modal__content").contains(e.target)) {
+                closeModal(mod);
+            }
+        });
+        mod.querySelectorAll(".modal__close").forEach(btn => {
+            btn.addEventListener("click", () => {
+                closeModal(mod)
+            })
+        })
+    });
+}
+// modal button on click
+function modalShowBtns() {
+    const modOpenBtn = document.querySelectorAll(".mod-open-btn")
+    if (modOpenBtn.length) {
+        modOpenBtn.forEach(btn => {
+            btn.addEventListener("click", e => {
+                e.preventDefault()
+                let href = btn.getAttribute("data-modal")
+                openModal(document.getElementById(href))
+            })
+        })
+    }
+}
+modalShowBtns()
+// modal close button on click
+function modalUnshowBtns() {
+    const modCloseBtn = document.querySelectorAll(".mod-close-btn")
+    if (modCloseBtn.length) {
+        modCloseBtn.forEach(btn => {
+            btn.addEventListener("click", e => {
+                e.preventDefault()
+                let href = btn.getAttribute("data-modal")
+                closeModal(document.getElementById(href))
+            })
+        })
+    }
+}
+modalUnshowBtns()
+//accordion
+const accordion = document.querySelectorAll(".accordion")
+if (accordion.length) {
+    accordion.forEach(item => {
+        item.querySelector(".accordion__header").addEventListener("click", () => {
+            if (!item.classList.contains("no-close")) {
+                item.parentNode.parentNode.querySelectorAll(".accordion").forEach(el => {
+                    if (el.querySelector(".accordion__header").classList.contains("active")) {
+                        smoothDrop(el.querySelector(".accordion__header"), el.querySelector(".accordion__body"))
+                        if (el.getBoundingClientRect().top < 0) {
+                            let pos = scrollPos() + item.getBoundingClientRect().top - el.querySelector(".accordion__body").clientHeight - header.clientHeight - 10
+                            window.scrollTo(0, pos)
+                        }
+                    }
+                })
+            }
+            smoothDrop(item.querySelector(".accordion__header"), item.querySelector(".accordion__body"))
+        })
+    })
+}
+//menu
+if (iconMenu && mobMenu) {
+    iconMenu.addEventListener("click", () => {
+        if (!iconMenu.classList.contains("active")) {
+            iconMenu.setAttribute("aria-expanded", true)
+            iconMenu.setAttribute("aria-label", "Закрыть меню")
+            iconMenu.classList.add("active")
+            mobMenu.classList.add("open")
+            disableScroll()
+        } else {
+            iconMenu.setAttribute("aria-expanded", false)
+            iconMenu.setAttribute("aria-label", "Открыть меню")
+            iconMenu.classList.remove("active")
+            mobMenu.classList.remove("open")
+            enableScroll()
+        }
+    })
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > bp.laptop && iconMenu.classList.contains("active")) {
+            iconMenu.click()
+        }
+    })
+}
+//swiper 3 items
+const swiper3 = document.querySelectorAll('.swiper3')
+if (swiper3.length) {
+    swiper3.forEach(item => {
+        let itemSwiper = new Swiper(item.querySelector(".swiper"), {
+            slidesPerView: 2,
+            spaceBetween: 10,
+            observer: true,
+            observeParents: true,
+            watchSlidesProgress: true,
+            pagination: {
+                el: item.querySelector(".swiper-pagination"),
+                type: "bullets",
+                clickable: true,
+            },
+            navigation: {
+                prevEl: item.querySelector(".nav-btn--prev"),
+                nextEl: item.querySelector(".nav-btn--next"),
+            },
+            scrollbar: {
+                el: item.querySelector(".swiper-scrollbar"),
+                draggable: true,
+            },
+            breakpoints: {
+                575.98: {
+                    slidesPerView: 3,
+                },
+            },
+            autoplay: {
+                delay: 3500,
+                pauseOnMouseEnter: true,
+                disableOnInteraction: false
+            },
+            speed: 800,
+        });
+    })
+}
+//swiper 1 items
+const swiper1 = document.querySelectorAll('.swiper1')
+if (swiper1.length) {
+    swiper1.forEach(item => {
+        let itemSwiper = new Swiper(item.querySelector(".swiper"), {
+            slidesPerView: 1,
+            observer: true,
+            observeParents: true,
+            watchSlidesProgress: true,
+            effect: "fade",
+            fadeEffect: { crossFade: true },
+            navigation: {
+                prevEl: item.querySelector(".nav-btn--prev"),
+                nextEl: item.querySelector(".nav-btn--next"),
+            },
+            speed: 500,
+        });
+    })
+}
+//authors swiper
+const authorsSticky = document.querySelector(".authors__sticky")
+let authorsMainSwiper
+if (document.querySelector(".authors__swiper")) {
+    const authorsThumbs = new Swiper(".authors__thumbswiper", {
+        slidesPerView: 'auto',
+        spaceBetween: 9,
+        direction: "horizontal",
+        observer: true,
+        observeParents: true,
+        watchSlidesProgress: true,
+        speed: 800,
+        scrollbar: {
+            el: document.querySelector(".authors .swiper-scrollbar"),
+            draggable: true,
+        },
+        breakpoints: {
+            767.98: {
+                direction: "vertical"
+            }
+        }
+    })
+    authorsMainSwiper = new Swiper(".authors__mainswiper", {
+        slidesPerView: 1,
+        observer: true,
+        observeParents: true,
+        watchSlidesProgress: true,
+        effect: "fade",
+        fadeEffect: { crossFade: true },
+        thumbs: {
+            swiper: authorsThumbs
+        },
+        speed: 500
+    })
+}
+// institutions on hover || click
+const instItem = document.querySelectorAll('.item-inst')
+if (instItem.length) {
+    function enter(content) {
+        if (window.innerWidth > bp.tablet && !content.classList.contains("show")) {
+            content.classList.add("show")
+            let diff = content.getBoundingClientRect().bottom - window.innerHeight
+            if (diff > 50) {
+                window.scrollTo({
+                    top: window.scrollY + diff,
+                    left: 0,
+                    behavior: "smooth",
+                })
+            }
+
+        }
+    }
+    function leave(content) {
+        content.classList.remove("show")
+    }
+    instItem.forEach(item => {
+        const content = item.querySelector(".item-inst__content")
+        item.addEventListener("mouseenter", () => enter(content));
+        item.addEventListener("mouseleave", () => leave(content));
+        item.addEventListener("click", (event) => {
+            if (window.innerWidth < bp.tablet) {
+                document.querySelector("#inst-modal .inst-modal__inner").innerHTML = item.innerHTML
+                openModal(document.querySelector("#inst-modal"))
+            }
+        })
+    })
+}
+// fadeUp animation
+function animate() {
+    const elements = document.querySelectorAll('[data-animation]');
+    elements.forEach(async item => {
+        const itemTop = item.getBoundingClientRect().top;
+        const itemPoint = Math.abs(window.innerHeight - item.offsetHeight * 0.1);
+        const itemScrolled = itemPoint > 100 ? itemPoint : 100;
+        if (itemTop - itemScrolled < 0) {
+            const animName = item.getAttribute("data-animation");
+            item.classList.add(animName);
+            item.removeAttribute("data-animation");
+        }
+    });
+}
+document.addEventListener("DOMContentLoaded", () => {
+    enableScroll()
+    disableScroll()
+    const wrap = document.querySelector('.wrap');
+    const vw = window.innerWidth / 100;
+    wrap.style.transform = `translate3d(0, ${1 * vw}px, 0) scale(0.4) rotateZ(720deg)`;
+    setTimeout(() => {
+        wrap.style.transform = `translate3d(0, 0px, 0) scale(1) rotateZ(0deg)`;
+        setTimeout(() => {
+            wrap.classList.remove('animate')
+            wrap.style.transform = 'none'
+            enableScroll()
+            ScrollTrigger.refresh(true);
+            animate()
+            window.addEventListener("scroll", animate) 
+            // authors animation
+            if (authorsSticky && authorsMainSwiper) {
+                let slideCount = document.querySelectorAll(".authors__mainswiper .swiper-slide").length
+                let activeIndex = { value: 0 }
+                setTimeout(() => {
+                    gsap.to(activeIndex, {
+                        value: slideCount - 1,
+                        scrollTrigger: {
+                            trigger: ".authors__sticky",
+                            start: "center center",
+                            end: "+=" + 300 * slideCount,
+                            pin: true,
+                            scrub: true,
+                            invalidateOnRefresh: true,
+                            onUpdate: (self) => {
+                                authorsMainSwiper.slideTo(Math.round(activeIndex.value))
+                            },
+                        }
+                    })
+                }, 1000);
+            }
+        }, 1000);
+    }, 1000);
+    setTimeout(() => {
+        /* gsap.timeline()
+            .to(wrap, {
+                y: 0,
+                scale: 1,
+                rotationZ: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    wrap.style.transform = 'none'
+                    enableScroll();
+                    ScrollTrigger.refresh(true); 
+                    if (authorsSticky && authorsMainSwiper) {
+                        let slideCount = document.querySelectorAll(".authors__mainswiper .swiper-slide").length
+                        let activeIndex = { value: 0 }
+                        setTimeout(() => {
+                            gsap.to(activeIndex, {
+                                value: slideCount - 1,
+                                scrollTrigger: {
+                                    trigger: ".authors__sticky",
+                                    start: "center center",
+                                    end: "+=" + 300 * slideCount,
+                                    pin: true,
+                                    scrub: true,
+                                    invalidateOnRefresh: true,
+                                    onUpdate: (self) => {
+                                        authorsMainSwiper.slideTo(Math.round(activeIndex.value))
+                                    },
+                                }
+                            })
+                        }, 1000);
+                    }
+                }
+            }) */
+
+        /*  document.querySelector('.wrap').style.transition = 'all 1s ease-in-out'
+         document.querySelector('.wrap').style.transform = `translate3d(0, 0px, 0) scale(1) rotateZ(0deg)`;
+         setTimeout(() => {
+             enableScroll()
+             document.querySelector('.wrap').style.transform = 'none'
+             gsap.delayedCall(1000, () => ScrollTrigger.refresh());
+         }, 2000); */
+    }, 1000);
+
+});
+gsap.delayedCall(3000, () => ScrollTrigger.refresh(true));
+

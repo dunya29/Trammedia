@@ -1,0 +1,20 @@
+.footer {
+    &__bottom {
+        padding: 20px 0;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 16px;
+        align-items: start;
+        border-top: 1px solid var(--primary-color);
+        p,
+        a {
+            color: var(--gray-color);
+        }
+        a:hover {
+            color: var(--primary-color);
+        }
+    }
+    &__txt {
+        align-self: center;
+    }
+}

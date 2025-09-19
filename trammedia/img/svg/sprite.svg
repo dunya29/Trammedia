@@ -1,0 +1,12 @@
+<svg  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300">
+    <style>:root>svg{display:none}:root>svg:target{display:block}</style>
+    <svg id="btn-prev" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 33">
+        <path d="M4.47081 16.0002L9.10302 11.3929L8.31307 10.6072L2.38841 16.5L8.31307 22.3929L9.10302 21.6072L4.583 17.1114L31.0513 17.1114V16.0002L4.47081 16.0002Z"/>
+    </svg>
+    <svg id="btn-next" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 33">
+        <path d="M29.4091 16.0002L24.7769 11.3929L25.5668 10.6072L31.4915 16.5L25.5668 22.3929L24.7769 21.6072L29.2969 17.1114L2.82861 17.1114V16.0002L29.4091 16.0002Z" />
+    </svg>
+    <svg id="ext-link" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 12" fill="none">
+        <path d="M3.87988 0.75H11.8799M11.8799 0.75V8.25M11.8799 0.75L0.879883 11.25"/>
+    </svg>
+</svg>

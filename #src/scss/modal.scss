@@ -1,0 +1,93 @@
+.modal {
+    visibility: hidden;
+    opacity: 0;
+    padding: 40px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    overflow: auto;
+    transition: all 0.3s 0.1s ease-out;
+    pointer-events: none;
+    &.open {
+        visibility: visible;
+        opacity: 1;
+        transition: all 0.3s ease-out;
+        pointer-events: all;
+        .modal__content {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.3s 0.1s ease-out;
+        }
+    }
+    &__top {
+        margin-bottom: 28px;
+        border-bottom: 1px solid var(--primary-color);
+    }
+    .btn-cross.modal__close {
+        position: absolute;
+        right: var(--container-offset);
+        top: var(--container-offset);
+    }
+    &__content {
+        width: 100%;
+        max-width: 640px;
+        padding: 40px 48px;
+        margin: auto;
+        background: var(--light-gray-color);
+        border-radius: 4px;
+        position: relative;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.3s ease-out;
+    }
+    @media (max-width: $bp4) {
+        padding: 0;
+        overflow: hidden;
+        &__top {
+            background: var(--light-gray-color);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        &__content {
+            height: 100%;
+            max-width: 100%;
+            padding: 50px var(--container-offset) 25px;
+            border-radius: 0;
+            .custom-scroll {
+                height: 100%;
+                padding-bottom: 25px;
+                overflow: auto;
+                scrollbar-width: none;
+                border-bottom: 1px solid var(--primary-color);
+                &::-webkit-scrollbar {
+                    display: none;
+                    width: 0;
+                    height: 0;
+                }
+            }
+        }
+    }
+}
+.inst-modal {
+    .item-inst__logo {
+        margin-bottom: 20px;
+        .media-contain img {
+            position: static;
+        }
+    }
+    .item-inst__content {
+        padding: 0;
+        position: static;
+        visibility: visible;
+        opacity: 1;
+        transform: none;
+    }
+}

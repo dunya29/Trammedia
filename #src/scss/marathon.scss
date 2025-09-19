@@ -1,0 +1,135 @@
+.marathon {
+    &__content {
+        margin-bottom: 20px;
+    }
+    &__period {
+        margin-bottom: 60px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    &__date {
+        color: var(--gray-color);
+    }
+    @media (min-width: $bp4) {
+        &__content {
+            column-count: 2;
+            column-gap: 20px;
+            & > * {
+                break-inside: avoid;
+            }
+        }
+    }
+    @media (min-width: $bp2) {
+        &__date {
+            margin-top: 20px;
+        }
+        &__content {
+            p,
+            li {
+                font-size: 20px;
+            }
+        }
+    }
+    @media (max-width: $bp2) {
+        &__period {
+            margin-bottom: 40px;
+        }
+    }
+    @media (max-width: $bp3) {
+        &__date {
+            text-align: center;
+        }
+    }
+    @media (max-width: $bp6) {
+        .sec-top {
+            h2,
+            .h2 {
+                text-align: left;
+            }
+        }
+    }
+}
+
+.marathon-acc {
+    padding: 20px 0;
+    border-top: 1px solid var(--primary-color);
+    &:last-child {
+        border-bottom: 1px solid var(--primary-color);
+    }
+    & > *:last-child {
+        margin-bottom: 0;
+    }
+    .accordion__header {
+        h4,
+        .h4 {
+            max-width: 800px;
+        }
+    }
+    .page-content {
+        p,
+        li {
+            font-size: 14px;
+        }
+    }
+    .page-content,
+    &__place {
+        margin-bottom: 36px;
+    }
+    .main-btn,
+    &__author {
+        align-self: end;
+    }
+    .main-btn {
+        grid-column: 1/2;
+    }
+    &__content {
+        padding-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+        gap: 20px;
+        align-items: start;
+        justify-items: start;
+    }
+    &__date {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    &__place {
+        font-size: 14px;
+        max-width: 365px;
+        &-lbl {
+            color: var(--gray-color);
+        }
+    }
+    &__info {
+        font-size: 14px;
+    }
+    &__author {
+        font-size: 16px;
+        margin-bottom: 6px;
+        .accent {
+            color: var(--gray-color);
+            margin-right: 14px;
+        }
+    }
+    @media (max-width: $bp2) {
+        .page-content,
+        &__place {
+            margin-bottom: 20px;
+        }
+    }
+    @media (max-width: $bp4) {
+        .main-btn {
+            order: 1;
+            width: 100%;
+        }
+        .page-content,
+        &__place {
+            margin-bottom: 0px;
+        }
+        &__content {
+            grid-template-columns: 1fr;
+        }
+    }
+}

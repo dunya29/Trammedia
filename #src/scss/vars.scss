@@ -1,0 +1,31 @@
+:root {
+    --content-width: 1520px;
+    --container-offset: 16px;
+    --container-width: calc(var(--content-width) + (var(--container-offset) * 2));
+    --font-family: "TT-Commons-Pro", sans-serif;
+    --font-family-heading: "TT-Tricks", sans-serif;
+    --main-offset: 156px;
+    --black-color: #000000;
+    --white-color: #ffffff;
+    --primary-color: #8a2a2b;
+    --primary-color-hover: #9f0002;
+    --primary-color-active: #9f0002;
+    --gray-color: #939393;
+    --light-gray-color: #f1f2f2;
+    --error-color: #e63811;
+    --scrollbar-color: #f1f2f2;
+    --scrollbar-thumb-color: #8a2a2b;
+}
+$bp1: 1450.98px;
+$bp2: 1250.98px;
+$bp3: 1000.98px;
+$bp4: 767.98px;
+$bp5: 575.98px;
+$bp6: 479.98px;
+$bp7: 370.98px;
+@media (max-width:$bp2) {
+    :root {
+         --content-width: 960px;
+        --main-offset: 150px;
+    }
+}

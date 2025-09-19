@@ -1,0 +1,21 @@
+<!--item-author-->
+<div class="item-author">
+    <div class="page-content">
+        <p>У авторов проекта широкий профессиональный диапазон: искусство, маркетинг, история, журналистика, исследования
+            городской
+            среды и&nbsp;многое другое.</p>
+    </div>
+    @@if (noPhoto === true) {
+    <div class="img media-cover no-photo"></div>
+    }
+    @@if (noPhoto === false) {
+    <div class="img media-cover">
+        <img src="img/content/author-1.jpg" loading="lazy" alt="Алиса Савицкая">
+    </div>
+    }
+    <div class="item-author__info">
+        <p class="h4 item-author__author">Алиса Савицкая</p>
+        <p class="item-author__pos">— главный куратор студии «Тихая», приглашенный куратор Музея Москвы. Автор идеи и куратор
+            проекта «Первое трамвайное медиа».</p>
+    </div>
+</div>

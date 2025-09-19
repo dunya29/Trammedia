@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "TT-Commons-Pro";
+    font-weight: 400;
+    font-style: normal;
+    src: local("TT-Commons-Pro"), local("TT-Commons-Pro"), url("../fonts/TT-Commons-Pro.woff2") format("woff2"), url("../fonts/TT-Commons-Pro.woff") format("woff"), url("../fonts/TT-Commons-Pro.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: "TT-Tricks";
+    font-weight: 400;
+    font-style: normal;
+    src: local("TT-Tricks-Regular"), local("TT-Tricks-Regular"), url("../fonts/TT-Tricks-Regular.woff2") format("woff2"), url("../fonts/TT-Tricks-Regular.woff") format("woff"), url("../fonts/TT-Tricks-Regular.ttf") format("truetype");
+    font-display: swap;
+}

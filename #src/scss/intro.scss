@@ -1,0 +1,94 @@
+.intro {
+    padding-top: 60px;
+    .h1 {
+        u {
+            text-decoration: none;
+        }
+    }
+    &__path {
+        svg {
+            width: 100%;
+            height: 384px;
+        }
+        &.path-anim {
+            line {
+                animation: path-anim 1s linear both;
+            }
+        }
+        line {
+            stroke: var(--primary-color);
+            &:nth-child(1),
+            &:nth-child(2) {
+                stroke-dasharray: 1554px;
+                stroke-dashoffset: 1554px;
+            }
+            &:nth-child(3) {
+                stroke-dasharray: 900px;
+                stroke-dashoffset: -900px;
+            }
+        }
+    }
+    &__row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        .img {
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    @media (max-width: $bp2) {
+        &__row {
+            grid-template-columns: 3fr 2fr 3fr;
+        }
+    }
+    @media (max-width: $bp3) {
+        padding-top: 0;
+        &__row {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+    }
+    @media (max-width: $bp4) {
+        &__path {
+            svg {
+                height: 231px;
+                margin: -30px 0;
+            }
+            line {
+                &:nth-child(1),
+                &:nth-child(2) {
+                    stroke-dasharray: 380px;
+                    stroke-dashoffset: 380px;
+                }
+                &:nth-child(3) {
+                    stroke-dasharray: 380px;
+                    stroke-dashoffset: -380px;
+                }
+            }
+        }
+        &__row {
+            grid-template-columns: 1fr;
+            .img {
+                order: -1;
+            }
+        }
+    }
+    @media (max-width: $bp6) {
+        .h1 {
+            u {
+                display: block;
+                text-align: right;
+            }
+        }
+    }
+}
+@keyframes path-anim {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
