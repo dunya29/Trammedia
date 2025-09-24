@@ -1803,8 +1803,14 @@ blockquote footer p {
   width: 108px;
   height: 108px;
   border: 3px solid transparent;
+  border-radius: 2px;
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
+  overflow: hidden;
+}
+
+.authors__thumbswiper .swiper-slide .img {
+  border-radius: 0;
 }
 
 .authors__thumbswiper .swiper-slide-thumb-active {
