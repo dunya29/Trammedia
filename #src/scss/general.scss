@@ -38,7 +38,7 @@ body {
 	background: var(--light-gray-color);
 	display: flex;
 	flex-direction: column;
-	&.animate {
+	/* 	&.animate {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -54,7 +54,7 @@ body {
 		&.animate {
 			transform: translate3d(0px, 95vh, 0px) ;
 		}
-	}
+	} */
 }
 .no-scroll {
 	overflow: hidden;
@@ -152,6 +152,13 @@ blockquote > p {
 	@media (max-width: $bp4) {
 		font-size: 22px;
 		letter-spacing: -0.288px;
+	}
+}
+h5,
+.h5 {
+	font-size: 20px;
+	@media (max-width: $bp2) {
+		font-size: 18px;
 	}
 }
 p {
@@ -356,6 +363,18 @@ blockquote {
 	cursor: pointer;
 	transition: all 0.4s linear;
 }
+.main-btn,
+.text-btn {
+	span {
+		font-family: var(--font-family-heading);
+		text-transform: uppercase;
+	}
+	svg {
+		width: 12px;
+		height: 12px;
+		margin-left: 12px;
+	}
+}
 .main-btn {
 	padding: 15px;
 	background: var(--primary-color);
@@ -363,15 +382,35 @@ blockquote {
 		background: var(--primary-color-hover);
 	}
 	span {
-		font-family: var(--font-family-heading);
 		color: var(--light-gray-color);
-		text-transform: uppercase;
 	}
 	svg {
 		stroke: var(--light-gray-color);
-		width: 12px;
-		height: 12px;
-		margin-left: 12px;
+	}
+}
+.text-btn {
+	&:hover {
+		span:after {
+			width: 100%;
+			left: 0;
+		}
+	}
+	span {
+		position: relative;
+		&:after {
+			content: "";
+			display: block;
+			width: 0%;
+			height: 1px;
+			background: var(--primary-color);
+			transition: all 0.6s ease;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+		}
+	}
+	svg {
+		stroke: var(--primary-color);
 	}
 }
 .accent {
@@ -447,14 +486,12 @@ blockquote {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
-	margin: 0 -5px -5px;
+	margin: 0 -20px 0;
 	span,
 	a,
 	button {
-		color: var(--gray-color);
-		padding-bottom: 9px;
 		position: relative;
-		margin: 0 5px 5px;
+		margin: 0 20px 20px;
 		cursor: pointer;
 		&:after {
 			content: "";
@@ -468,11 +505,18 @@ blockquote {
 			bottom: 0;
 		}
 		&.active {
-			color: var(--gray-color);
 			&:after {
 				width: 100%;
 				left: 0;
 			}
+		}
+	}
+	@media (max-width: $bp2) {
+		margin: 0 -10px 10px;
+		span,
+		a,
+		button {
+			margin: 0 10px 10px;
 		}
 	}
 }
@@ -510,6 +554,14 @@ blockquote {
 	cursor: pointer;
 }
 .accordion {
+	padding: 20px 0;
+	border-top: 1px solid var(--primary-color);
+	&:last-child {
+		border-bottom: 1px solid var(--primary-color);
+	}
+	& > *:last-child {
+		margin-bottom: 0;
+	}
 	&.active {
 		.accordion__header {
 			color: var(--gray-color);
@@ -540,16 +592,6 @@ blockquote {
 	}
 	&__content {
 		padding-top: 20px;
-	}
-}
-#map {
-	border-radius: 4px;
-	overflow: hidden;
-	[class*="copyrights-pane"] {
-		display: none !important;
-	}
-	[class*="ground-pane"] {
-		filter: grayscale(0.5);
 	}
 }
 .img {

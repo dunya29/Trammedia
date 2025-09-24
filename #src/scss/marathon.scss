@@ -52,14 +52,6 @@
 }
 
 .marathon-acc {
-    padding: 20px 0;
-    border-top: 1px solid var(--primary-color);
-    &:last-child {
-        border-bottom: 1px solid var(--primary-color);
-    }
-    & > *:last-child {
-        margin-bottom: 0;
-    }
     .accordion__header {
         h4,
         .h4 {

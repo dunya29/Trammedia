@@ -101,7 +101,7 @@
 			right: 0;
 		}
 	}
-	&:nth-child(2n+1) {
+	&:nth-child(2n + 1) {
 		&:after {
 			left: 0;
 		}
@@ -220,7 +220,7 @@
 			height: 100%;
 		}
 	}
-	@media (min-width: $bp4) {
+	@media (min-width: $bp5) {
 		.swiper-scrollbar {
 			width: 4px;
 			height: 100%;
@@ -255,6 +255,14 @@
 		}
 	}
 	@media (max-width: $bp4) {
+		&__thumbswiper {
+			.swiper-slide {
+				width: 78px;
+				height: 78px;
+			}
+		}
+	}
+	@media (max-width: $bp5) {
 		padding-left: var(--container-offset);
 		padding-right: var(--container-offset);
 		margin-left: calc(var(--container-offset) * -1);
@@ -270,18 +278,26 @@
 		}
 		&__mainswiper {
 			margin-right: 0;
+			.media-cover {
+				margin: 0 auto;
+			}
 		}
 		&__thumbswiper {
 			margin-top: 20px;
 			overflow: visible;
-			.swiper-slide {
-				width: 78px;
-				height: 78px;
+		}
+	}
+}
+.co-authors {
+	@media (max-width: $bp2) {
+		.sec-top {
+			h3,
+			.h3 {
+				max-width: 420px;
 			}
 		}
 	}
 }
-
 .item-author {
 	display: grid;
 	grid-template-columns: 4fr 5fr;
@@ -320,6 +336,92 @@
 		.media-cover {
 			width: 100%;
 			padding-top: 100%;
+		}
+	}
+}
+.individ-sec,
+.org-sec {
+	padding-top: 20px;
+	position: relative;
+	margin-bottom: 30px;
+	&:last-child {
+		margin-bottom: 0;
+	}
+	&::before {
+		content: "";
+		width: calc(100% / 12 * 8);
+		height: 1px;
+		background: var(--primary-color);
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+	.swiper-wrapper {
+		flex-wrap: wrap;
+	}
+	&__top {
+		display: grid;
+		grid-template-columns: 2fr 3fr 1fr;
+		align-items: center;
+		gap: 20px;
+		margin-bottom: 20px;
+		.nav-btns {
+			justify-self: end;
+		}
+		.h4 {
+			color: var(--gray-color);
+		}
+	}
+	@media (max-width: $bp2) {
+		&:before {
+			width: calc(100% / 4 * 3);
+		}
+		&__top {
+			grid-template-columns: 1fr 2fr 1fr;
+		}
+	}
+	@media (max-width: $bp3) {
+		margin-bottom: 20px;
+		&::before {
+			width: 100%;
+		}
+		&__top {
+			grid-template-columns: auto 1fr auto;
+			gap: 9px;
+		}
+	}
+}
+.individ-sec {
+	@media (max-width: $bp6) {
+		.h5 {
+			font-size: 14px;
+		}
+	}
+}
+.item-org {
+	.img {
+		img {
+			filter: contrast(0.8) grayscale(100%);
+		}
+		&:after {
+			background: linear-gradient(0deg, rgba(0, 0, 0, 0.11) 0%, rgba(0, 0, 0, 0.11) 100%), linear-gradient(0deg, #9c6261 0%, #9c6261 100%);
+		}
+	}
+	.media-cover {
+		width: 108px;
+		height: 108px;
+		margin-bottom: 8px;
+	}
+	&__content {
+		max-width: 365px;
+		h5,
+		.h5 {
+			margin-bottom: 4px;
+		}
+		p {
+			font-size: 14px;
+			color: var(--gray-color);
+			max-width: 300px;
 		}
 	}
 }

@@ -14,8 +14,7 @@
                 <section class="section intro">
                     <div class="container">
                         <div class="intro__path" data-animation="path-anim">
-                            <svg class=" mob-hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1522 385" fill="none" preserveAspectRatio="none"
-                                >
+                            <svg class=" mob-hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1522 385" fill="none" preserveAspectRatio="none">
                                 <line x1="0.895763" y1="324.511" x2="1520.9" y2="0.510973" />
                                 <line x1="1.08902" y1="33.508" x2="1521.09" y2="308.508" />
                                 <line x1="1.17599" y1="67.532" x2="844.176" y2="384.532" />
@@ -43,6 +42,125 @@
                                 <p>«Первое трамвайное медиа» существует в&nbsp;виде сайта и&nbsp;телеграм-канала, стендов в&nbsp;трамваях и&nbsp;печатных изданий. Вместе
                                     с&nbsp;проектом вы&nbsp;можете отправиться на&nbsp;прогулки и&nbsp;экскурсии, посетить локальные культурные центры и, конечно, прокатиться
                                     на&nbsp;трамваях.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--editions-->
+                <section class="section editions" id="editions">
+                    <div class="container">
+                        <div class="sec-top">
+                            <h2>издания</h2>
+                        </div>
+                        <div class="editions__row">
+                            <!--item-edition-->
+                            <div class="item-edition">
+                                <div class="item-edition__top">
+                                    <div class="item-edition__img">
+                                        <img src="img/content/edition-1.jpg" alt loading="lazy">
+                                    </div>
+                                    <h4>«Маршрут №&nbsp;5»</h4>
+                                </div>
+                                <div class="item-edition__date">
+                                    <span>Дата выхода:</span>
+                                    <span>1 октября</span>
+                                </div>
+                                <div class="page-content">
+                                    <p>От&nbsp;улицы Белинского до&nbsp;Мызы, через&nbsp;исторический некрополь, народную стройку и&nbsp;единственный кинотеатр Приокского
+                                        района&nbsp;— первое издание нашего проекта будет посвящено трамваю №&nbsp;5, который был&nbsp;снова запущен после&nbsp;реконструкции
+                                        в&nbsp;июне прошлого года. В&nbsp;этом выпуске работники депо, историки транспорта, трамвайные энтузиасты и&nbsp;горожане, живущее
+                                        рядом с&nbsp;путями, рассказывают о&nbsp;своём отношении к&nbsp;трамваям и&nbsp;делятся любимыми местами, неочевидными для&nbsp;гостей
+                                        района.</p>
+                                </div>
+                                <a href="#" class="btn text-btn" target="_blank">
+                                    <span>Открыть выпуск (pdf)</span>
+                                    <svg><use xlink:href="img/svg/sprite.svg#ext-link"></use></svg>
+                                </a>
+                            </div>
+                            <!--item-edition-->
+                            <div class="item-edition">
+                                <div class="item-edition__top">
+                                    <div class="item-edition__img">
+                                        <img src="img/content/edition-2.jpg" alt loading="lazy">
+                                    </div>
+                                    <h4>«Маршрут №&nbsp;6/№7»</h4>
+                                </div>
+                                <div class="item-edition__date">
+                                    <span>Дата выхода:</span>
+                                    <span>29 октября</span>
+                                </div>
+                                <div class="page-content">
+                                    <p>Издание находится в разработке. Если вы хотите рассказать нам личную историю, связанную с трамвайными маршрутами № 6 и № 7, — напишите
+                                        нам, пожалуйста.</p>
+                                </div>
+                                <a href="#" class="btn text-btn" target="_blank">
+                                    <span>Написать в бот</span>
+                                    <svg><use xlink:href="img/svg/sprite.svg#ext-link"></use></svg>
+                                </a>
+                            </div>
+                            <!--item-edition-->
+                            <div class="item-edition">
+                                <div class="item-edition__top">
+                                    <div class="item-edition__img">
+                                        <img src="img/content/edition-3.jpg" alt loading="lazy">
+                                    </div>
+                                    <h4>«Маршрут №&nbsp;3/№8»</h4>
+                                </div>
+                                <div class="item-edition__date">
+                                    <span>Дата выхода:</span>
+                                    <span>19 ноября</span>
+                                </div>
+                                <div class="page-content">
+                                    <p>Издание находится в разработке. Если вы хотите рассказать нам личную историю, связанную с трамвайными маршрутами № 3 и № 8, — напишите
+                                        нам, пожалуйста.</p>
+                                </div>
+                                <a href="#" class="btn text-btn" target="_blank">
+                                    <span>Написать в бот</span>
+                                    <svg><use xlink:href="img/svg/sprite.svg#ext-link"></use></svg>
+                                </a>
+                            </div>
+                            <div class="editions__line"></div>
+                        </div>
+                    </div>
+                </section>
+                <!--map-sec-->
+                <section class="section map-sec" id="map">
+                    <div class="container">
+                        <div class="sec-top">
+                            <h2>Точки дистрибуции</h2>
+                        </div>
+                        <div class="switch-block">
+                            <div class="tabs">
+                                <button class="h4 active" data-tab="loc">Локации</button>
+                                <button class="h4" data-tab="tram">Трамваи</button>
+                            </div>
+                            <div class="map-sec__blocks">
+                                <div class="map-sec__block active" data-block="loc">
+                                    <div class="map-sec__map">
+                                        <div class="map" id="loc-map"></div>
+                                    </div>                                   
+                                    <div class="content-shift map-sec__loc">
+                                        @@include("_map-loc-acc.html", {"nmb":"1", "title": "Автозаводский район"})
+                                        @@include("_map-loc-acc.html", {"nmb":"2", "title": "Канавинский район"})
+                                        @@include("_map-loc-acc.html", {"nmb":"3", "title": "Ленинский район"})
+                                        @@include("_map-loc-acc.html", {"nmb":"4", "title": "Московский район"})
+                                        @@include("_map-loc-acc.html", {"nmb":"5", "title": "Приокский район"})
+                                        @@include("_map-loc-acc.html", {"nmb":"6", "title": "Советский район"})
+                                        @@include("_map-loc-acc.html", {"nmb":"7", "title": "Сормовский район"})
+                                    </div>
+                                </div>
+                                <div class="map-sec__block" data-block="tram">
+                                    <div class="map-sec__map">
+                                        <div class="map" id="tram-map"></div>
+                                    </div>                                
+                                    <div class="content-shift map-sec__tram">
+                                        @@include("_map-tram-acc.html", {"title": "Маршрут №5"})
+                                        @@include("_map-tram-acc.html", {"title": "Маршрут №6"})
+                                        @@include("_map-tram-acc.html", {"title": "Маршрут №7"})
+                                        @@include("_map-tram-acc.html", {"title": "Маршрут №3"})
+                                        @@include("_map-tram-acc.html", {"title": "Маршрут №8"})
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -238,6 +356,247 @@
                                 </div>
                             </div>
                         </section>
+                        <!--authors-->
+                        <section class="co-authors">
+                            <div class="sec-top">
+                                <h3>участники и&nbsp;соавторы</h3>
+                            </div>
+                            <!--co-authors__sec-->
+                            <section class="co-authors__sec individ-sec">
+                                <div class="individ-sec__top">
+                                    <span class="h4">(150)</span>
+                                    <h4>Граждане</h4>
+                                    <div class="nav-btns">
+                                        <button class="btn nav-btn nav-btn--prev"><svg><use xlink:href="img/svg/sprite.svg#btn-prev"></use></svg></button>
+                                        <button class="btn nav-btn nav-btn--next"><svg><use xlink:href="img/svg/sprite.svg#btn-next"></use></svg></button>
+                                    </div>
+                                </div>
+                                <div class="content-shift swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <p class="h5">Алексей Фамильевич</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!--co-authors__sec-->
+                            <section class="co-authors__sec org-sec">
+                                <div class="org-sec__top">
+                                    <span class="h4">(20)</span>
+                                    <h4>Организации</h4>
+                                    <div class="nav-btns">
+                                        <button class="btn nav-btn nav-btn--prev"><svg><use xlink:href="img/svg/sprite.svg#btn-prev"></use></svg></button>
+                                        <button class="btn nav-btn nav-btn--next"><svg><use xlink:href="img/svg/sprite.svg#btn-next"></use></svg></button>
+                                    </div>
+                                </div>
+                                <div class="content-shift swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                        <div class="swiper-slide">
+                                            @@include("_item-org.html")
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </section>
+                    </div>
+                </section>
+                <!--gallery-->
+                <section class="section gallery">
+                    <div class="container">
+                        <div class="sec-top">
+                            <div class="h3"><span data-slide-current>01</span>—<span data-slide-total></span></div>
+                            <div class="nav-btns">
+                                <button class="btn nav-btn nav-btn--prev"><svg><use xlink:href="img/svg/sprite.svg#btn-prev"></use></svg></button>
+                                <button class="btn nav-btn nav-btn--next"><svg><use xlink:href="img/svg/sprite.svg#btn-next"></use></svg></button>
+                            </div>
+                        </div>
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    @@include("_item-gall.html")
+                                </div>
+                                <div class="swiper-slide">
+                                    @@include("_item-gall.html")
+                                </div>
+                                <div class="swiper-slide">
+                                    @@include("_item-gall.html")
+                                </div>
+                                <div class="swiper-slide">
+                                    @@include("_item-gall.html")
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </main>
@@ -245,6 +604,7 @@
             @@include('_modal.html')
         </div>
         @@include('_js.html')
+          @@include('_map.html')
     </body>
 
 </html>

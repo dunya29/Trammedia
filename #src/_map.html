@@ -1,0 +1,289 @@
+<script src="https://api-maps.yandex.ru/2.1/?apikey=d02ef18b-3f8a-40d8-ad6a-d6aad95f6099&lang=ru_RU"></script>
+<script>
+    let locations = [
+        {
+            "id": 1,
+            "districtId": 1,
+            "coords": [56.318801, 43.955292],
+            "title": 'Нижегородский планетарий им. Г. М. Гречко',
+            "address": 'ул. Революционная, д. 20',
+            "hours": "Вт–Вс 10:00–20:00",
+        },
+        {
+            "id": 2,
+            "districtId": 1,
+            "coords": [56.288914, 43.855143],
+            "title": 'Центральная районная библиотека им. Ф. М. Достоевского',
+            "address": 'ул. Гороховецкая, д. 18А',
+            "hours": "Вт–Пт 9:30–19:00; Вс 9:30–17:00"
+        },
+        {
+            "id": 3,
+            "districtId": 1,
+            "coords": [56.328324, 43.961313],
+            "title": 'Название локации',
+            "address": 'ул. Совнаркомовская, 13',
+            "hours": "Пн–Пт 09:00–18:00"
+        },
+        {
+            "id": 4,
+            "districtId": 6,
+            "coords": [56.293337, 44.013856],
+            "title": 'Название локации',
+            "address": 'Советский район, 13',
+            "hours": "Пн–Пт 09:00–18:00"
+        }
+    ]
+    let tramRoutes = [
+        {
+            "id": 1,
+            "title": 'Маршрут №5',
+            "route": 'Тоннель Московского вокзала',
+            "interval": "Каждые 15 минут, c 12:17 до 16:09",
+            "stations": [
+                { coords: [56.306069, 43.987315] },
+                { coords: [56.299901, 43.991507] },
+            ]
+        },
+        {
+            "id": 2,
+            "title": 'Маршрут №6',
+            "route": 'Тоннель Московского вокзала',
+            "interval": "Каждые 15 минут, c 12:17 до 16:09",
+            "stations": [
+                { coords: [56.317110, 43.941928] },
+                { coords: [56.280787, 43.937892] },
+                { coords: [56.300982, 43.940035 ] },
+            ]
+        }
+    ];
+</script>
+<script>
+    const locDistricts = document.querySelectorAll("[data-district-id]")
+    const switchMapLocBtn = document.querySelector("[data-tab=loc]")
+    const switchMapTramBtn = document.querySelector("[data-tab=tram]")
+    let center = [56.326797, 44.006516];  
+    let locMap
+    let tramMap
+    let geoObjects = [] 
+    let activePlacemark 
+    let maxZoom = 15
+    let tramColors = ['#8A2A2B', '#EAC637', '#606484', '#698460', '#E00101']
+    let isPlacemarkOnClick = false
+    function setmapDefaults(map) {
+        map.controls.remove('geolocationControl'); // удаляем геолокацию
+        map.controls.remove('searchControl'); // удаляем поиск
+        map.controls.remove('trafficControl'); // удаляем контроль трафика
+        map.controls.remove('typeSelector'); // удаляем тип
+        map.controls.remove('fullscreenControl'); // удаляем кнопку перехода в полноэкранный режим
+        map.controls.remove('rulerControl'); // удаляем контрол правил
+        map.controls.remove('zoomControl');
+        map.margin.setDefaultMargin(100);
+    }   
+    function placemarkOnClick(districtId,id) {
+        const districtItem = document.querySelector(`[data-district-id='${districtId}']`)
+        if (districtItem && !districtItem.classList.contains("active") ) {
+            districtItem.click()
+        }     
+    } 
+    function locMapInit() {
+        locMap = new ymaps.Map('loc-map', {
+            center,
+            zoom: 6,
+        },{
+            suppressMapOpenBlock: true,
+            suppressObsoleteBrowserNotifier:true,
+            yandexMapDisablePoiInteractivity: true,
+        });
+        setmapDefaults(locMap)
+        if (locations.length)  {
+            locations.forEach((item,i) => {
+                geoObjects[i] = new ymaps.Placemark(item.coords, 
+                    {
+                        balloonContent: `
+                        <div class="balloon loc-baloon">
+                            <div class="balloon__header">
+                                <p class="accent balloon__name">${item.title}</p>
+                            </div>
+                            <div class="balloon__body">
+                                ${item.address ? `<p>
+                                    <span>Адрес:</span>
+                                    <span>${item.address}</span>
+                                </p>` : ''}
+                                 ${item['hours'] ?  `<p>
+                                    <span>Режим работы:</span>
+                                    <span>${item['hours']}</span>
+                                </p>` : ""
+                                }
+                            </div>
+                        </div>`,
+                    }, 
+                    {
+                        balloonPanelMaxMapArea: window.innerWidth < 767.98 ? Infinity : 0,
+                        iconLayout: "default#image",
+                        iconImageHref: "img/svg/map-marker.svg",
+                        iconImageSize: window.innerWidth < 767.98 ? [10, 30] : [21, 61],
+                        iconImageOffset: window.innerWidth < 767.98 ? [-5, -30] : [-10.5, -61],
+                        cursor: "pointer",
+                        hideIconOnBalloonOpen: false,
+                        balloonOffset: [90,0]
+                    }
+                )
+                geoObjects[i].events.add('click', e => {
+                    let districtId = locations[i]['districtId']
+                    isPlacemarkOnClick = true
+                    placemarkOnClick(districtId)
+                });   
+            })
+            geoObjects.forEach(item => locMap.geoObjects.add(item))
+            locMap.setBounds(locMap.geoObjects.getBounds(), {checkZoomRange: true, zoomMargin: 100})
+            locMap.events.add('click',()=> locMap.balloon.close())
+            if (locDistricts.length) {
+                locDistricts.forEach(item => {
+                    item.addEventListener("click", e => {
+                        if (!isPlacemarkOnClick) {
+                            locMap.balloon.close()    
+                            if (!item.classList.contains("active")) {
+                                let id = Number(item.getAttribute("data-district-id"))
+                                let pointsList = locations.filter(item => Number(item['districtId']) === id).map(item => item.coords)
+                                if (pointsList.length) {
+                                    locMap.setBounds(ymaps.util.bounds.fromPoints(pointsList), {
+                                        checkZoomRange: true,
+                                    }).then(function(){ if(locMap.getZoom() > maxZoom) locMap.setZoom(maxZoom)});
+                                }                         
+                            } else { 
+                                locMap.setBounds(locMap.geoObjects.getBounds(), {checkZoomRange: true, zoomMargin: 100})
+                            }  
+                        }                      
+                        isPlacemarkOnClick = false                               
+                    })
+                })                
+            }     
+        }
+    }  
+    function buildRoute(points, thisRoute, callback) {
+        if (!tramMap) {
+            console.error('Карта не инициализирована');
+            if (callback) callback();
+            return;
+        }
+        let route = new ymaps.multiRouter.MultiRoute(
+            {
+                referencePoints: points.map(point => point.coords),
+                params: {
+                    routingMode: 'masstransit', 
+                    results: 1, 
+                    routingTypes: { 
+                        auto: false,
+                        tram: true, 
+                        bus: false,
+                        trolleybus: false, 
+                        subway: false,
+                        pedestrian: false 
+                    }
+                }
+            }, 
+            {
+                wayPointVisible: false,
+                viaPointVisible: false,
+                pinVisible: false,
+                routeActivePedestrianIconVisible: false,
+                routeActiveMarkerVisible: false,
+                routeActiveStrokeWidth: 5,
+                routeActiveStrokeStyle: 'solid',
+                routeActiveStrokeColor: tramColors[Number(thisRoute['id']) - 1] || '#1e98ff',
+            }
+        );
+        tramMap.geoObjects.add(route);
+        route.model.events.add('requestsuccess', function() {
+            if (callback) callback();
+        });
+        
+        route.model.events.add('requesterror', function() {
+            if (callback) callback(); 
+        });
+        route.events.add('click', function(event) {
+            event.preventDefault();
+            const coords = event.get('coords');
+            const balloonContent = `
+                <div class="balloon">
+                    <div class="balloon__header">
+                        <p class="accent balloon__name">${thisRoute.title}</p>
+                    </div>
+                    <div class="balloon__body">
+                        ${thisRoute['route'] ? `<p>
+                            <span>Кольцевой маршрут: </span>
+                            <span>${thisRoute['route']}</span>
+                        </p>` : ''}
+                         ${thisRoute['interval'] ?  `<p>
+                            <span>Интервал: </span>
+                            <span>${thisRoute['interval']}</span>
+                        </p>` : ""
+                        }
+                    </div>
+                </div>
+            `;           
+            tramMap.balloon.open(coords, balloonContent,{
+                panelMaxMapArea: window.innerWidth < 767.98 ? Infinity : 0,
+                offset: [75,50]
+            }); 
+        }); 
+    }        
+    function tramMapInit() {
+        tramMap = new ymaps.Map('tram-map', {
+            center,
+            zoom: 6
+        },{
+            suppressMapOpenBlock: true,
+            suppressObsoleteBrowserNotifier:true,
+            yandexMapDisablePoiInteractivity: true,
+        });
+        setmapDefaults(tramMap) 
+        let tramGeoObjects = []   
+        let routePromises = []    
+        tramRoutes.forEach(route => {
+            if (route.stations.length) {
+                route.stations.forEach(el => tramGeoObjects.push(el.coords))
+                routePromises.push(
+                    new Promise(resolve => {
+                        buildRoute(route.stations, route, resolve);
+                    })
+                );
+            }
+        })
+        Promise.all(routePromises).then(() => {
+            tramMap.setBounds(ymaps.util.bounds.fromPoints(tramGeoObjects), {
+                checkZoomRange: true, 
+                zoomMargin: 100
+            });
+        });
+    tramMap.events.add('click', function(e) {
+    const target = e.get('target');
+    // Если клик не по нашему объекту - отменяем
+    if (!target || !target.properties || !target.properties.get('isOurObject')) {
+        e.preventDefault();
+        return false;
+    }
+});
+    }
+    if (document.querySelector("#loc-map") && document.querySelector("#tram-map")) {
+        ymaps.ready(() => {
+            locMapInit()
+            tramMapInit()
+        });
+        let mapTimeout
+        window.addEventListener("resize", () => {
+            clearTimeout(mapTimeout)
+            if (locMap) {
+                locMap.destroy()
+            }
+            if (tramMap) {
+                tramMap.destroy()
+            }
+            mapTimeout = setTimeout(() => {
+                locMapInit()
+                tramMapInit()
+            }, 300);
+        })
+    }
+</script>

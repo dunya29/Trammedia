@@ -18,13 +18,18 @@ let bp = {
     tablet: 767.98,
     phone: 575.98
 }
-//get path to sprite id
-function sprite(id) {
-    return '<svg><use xlink:href="img/svg/sprite.svg#' + id + '"></use></svg>'
+//debounce
+function debounce(func, delay) {
+    let timeout;
+    return function (...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), delay);
+    };
 }
 //scroll pos
 function scrollPos() {
-    return window.pageYOffset || document.documentElement.scrollTop
+    return window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
 }
 function checkIOS() {
     let platform = navigator.platform;
@@ -39,7 +44,6 @@ function checkIOS() {
     );
 }
 let isIOS = checkIOS()
-let firstLoad = true
 //enable scroll
 function enableScroll() {
     if (!document.querySelector(".modal.open")) {
@@ -50,7 +54,7 @@ function enableScroll() {
         document.body.classList.remove("no-scroll")
 
         // для IOS
-        if (isIOS && !firstLoad) {
+        if (isIOS) {
             document.body.style.position = '';
             document.body.style.top = '';
             document.body.style.width = '';
@@ -70,8 +74,8 @@ function disableScroll() {
         document.body.classList.add("no-scroll");
 
         // для IOS
-        if (isIOS && !firstLoad) {
-            let scrollY = window.scrollY;
+        if (isIOS) {
+            let scrollY = scrollPos();
             document.body.style.position = 'fixed';
             document.body.style.width = '100%';
             document.body.style.top = `-${scrollY}px`;
@@ -139,29 +143,6 @@ function tabSwitch(nav, block) {
                 }
             })
         })
-    });
-}
-// tabs scroll btn
-const tabsScroll = document.querySelectorAll(".tabs-scroll")
-function tabsBtnVisibility(item) {
-    let scrollW = item.querySelector(".tabs").scrollWidth
-    let clientW = item.querySelector(".tabs").clientWidth
-    let scrollLeft = item.querySelector(".tabs").scrollLeft
-    scrollW - clientW - scrollLeft > 5 ? item.classList.add("show-btn") : item.classList.remove("show-btn")
-}
-if (tabsScroll.length) {
-    tabsScroll.forEach(item => {
-        tabsBtnVisibility(item)
-        item.querySelector(".tabs").addEventListener("scroll", () => tabsBtnVisibility(item))
-        window.addEventListener("resize", tabsBtnVisibility(item))
-        if (item.querySelector(".tabs-scroll__btn")) {
-            item.querySelector(".tabs-scroll__btn").addEventListener("click", e => {
-                let findActiveIdx = Array.from(item.querySelectorAll("[data-tab]")).findIndex(item => item.classList.contains("active"))
-                if (findActiveIdx < item.querySelectorAll("[data-tab]").length - 1) {
-                    item.querySelectorAll("[data-tab]")[findActiveIdx + 1].click()
-                }
-            })
-        }
     });
 }
 // custom scroll FF
@@ -290,7 +271,8 @@ if (accordion.length) {
     accordion.forEach(item => {
         item.querySelector(".accordion__header").addEventListener("click", () => {
             if (!item.classList.contains("no-close")) {
-                item.parentNode.parentNode.querySelectorAll(".accordion").forEach(el => {
+                let collection = item.classList.contains("marathon-acc") ? document.querySelectorAll(".marathon-acc") : item.parentNode.querySelectorAll(".accordion")
+                collection.forEach(el => {
                     if (el.querySelector(".accordion__header").classList.contains("active")) {
                         smoothDrop(el.querySelector(".accordion__header"), el.querySelector(".accordion__body"))
                         if (el.getBoundingClientRect().top < 0) {
@@ -325,43 +307,6 @@ if (iconMenu && mobMenu) {
         if (window.innerWidth > bp.laptop && iconMenu.classList.contains("active")) {
             iconMenu.click()
         }
-    })
-}
-//swiper 3 items
-const swiper3 = document.querySelectorAll('.swiper3')
-if (swiper3.length) {
-    swiper3.forEach(item => {
-        let itemSwiper = new Swiper(item.querySelector(".swiper"), {
-            slidesPerView: 2,
-            spaceBetween: 10,
-            observer: true,
-            observeParents: true,
-            watchSlidesProgress: true,
-            pagination: {
-                el: item.querySelector(".swiper-pagination"),
-                type: "bullets",
-                clickable: true,
-            },
-            navigation: {
-                prevEl: item.querySelector(".nav-btn--prev"),
-                nextEl: item.querySelector(".nav-btn--next"),
-            },
-            scrollbar: {
-                el: item.querySelector(".swiper-scrollbar"),
-                draggable: true,
-            },
-            breakpoints: {
-                575.98: {
-                    slidesPerView: 3,
-                },
-            },
-            autoplay: {
-                delay: 3500,
-                pauseOnMouseEnter: true,
-                disableOnInteraction: false
-            },
-            speed: 800,
-        });
     })
 }
 //swiper 1 items
@@ -400,7 +345,7 @@ if (document.querySelector(".authors__swiper")) {
             draggable: true,
         },
         breakpoints: {
-            767.98: {
+            575.98: {
                 direction: "vertical"
             }
         }
@@ -427,7 +372,7 @@ if (instItem.length) {
             let diff = content.getBoundingClientRect().bottom - window.innerHeight
             if (diff > 50) {
                 window.scrollTo({
-                    top: window.scrollY + diff,
+                    top: scrollPos() + diff,
                     left: 0,
                     behavior: "smooth",
                 })
@@ -465,44 +410,187 @@ function animate() {
     });
 }
 document.addEventListener("DOMContentLoaded", () => {
-    const wrap = document.querySelector('.wrap');
-    const vw = window.innerWidth / 100;
-    let timeOut = window.innerWidth > bp.tablet ? 1000 : 0
-    setTimeout(() => {
-        wrap.style.transform = window.innerWidth > bp.tablet ? `translate3d(0, ${1 * vw}px, 0) scale(0.4) rotateZ(720deg)` : `translate3d(0, 0, 0)`
-        setTimeout(() => {
-            wrap.style.transform = `translate3d(0, 0px, 0) scale(1) rotateZ(0deg)`;
-            setTimeout(() => {
-                wrap.classList.remove('animate')
-                wrap.style.transform = 'none'
-                enableScroll()
-                ScrollTrigger.refresh(true);
-                animate()
-                window.addEventListener("scroll", animate)
-                // authors animation
-                if (authorsSticky && authorsMainSwiper) {
-                    let slideCount = document.querySelectorAll(".authors__mainswiper .swiper-slide").length
-                    let activeIndex = { value: 0 }
-                    gsap.to(activeIndex, {
-                        value: slideCount - 1,
-                        scrollTrigger: {
-                            trigger: ".authors__sticky",
-                            start: "center center",
-                            end: "+=" + 300 * slideCount,
-                            pin: true,
-                            scrub: true,
-                            invalidateOnRefresh: true,
-                            onUpdate: (self) => {
-                                authorsMainSwiper.slideTo(Math.round(activeIndex.value))
-                            },
-                        }
-                    })
-                }
-            }, timeOut);
-        }, 1000);
-    }, 1000); 
+    ScrollTrigger.refresh(true)
+    animate()
+    window.addEventListener("scroll", animate)
+    // authors animation
+    if (authorsSticky && authorsMainSwiper) {
+        let slideCount = document.querySelectorAll(".authors__mainswiper .swiper-slide").length
+        let activeIndex = { value: 0 }
+        gsap.to(activeIndex, {
+            value: slideCount - 1,
+            scrollTrigger: {
+                trigger: ".authors__sticky",
+                start: "center center",
+                end: "+=" + 300 * slideCount,
+                pin: true,
+                scrub: true,
+                invalidateOnRefresh: true,
+                onUpdate: (self) => {
+                    authorsMainSwiper.slideTo(Math.round(activeIndex.value))
+                },
+            }
+        })
+    }
 });
-window.addEventListener("resize", () => {
-    gsap.delayedCall(1000, () => ScrollTrigger.refresh(true));
-})
+window.addEventListener("load", () => {
+    ScrollTrigger.refresh(true)
+});
+window.addEventListener("resize", debounce(() => ScrollTrigger.refresh(true), 1000));
+function imgLazyLoad(timeout) {
+    let lazyImages = document.querySelectorAll("img[loading='lazy']")
+    let debouncedLog = debounce(() => ScrollTrigger.refresh(true), timeout || 1000);
+    function onImgLoad() {
+        debouncedLog()
+    }
+    lazyImages.forEach(img => {
+        img.complete ? onImgLoad() : img.addEventListener("load", onImgLoad);
+    });
+} 
+imgLazyLoad();
+//individ swiper
+const individSec = document.querySelector(".individ-sec")
+if (individSec) {
+    new Swiper(individSec.querySelector(".swiper"), {
+        slidesPerView: 2,
+        spaceBetween: 16,
+        observer: true,
+        observeParents: true,
+        watchSlidesProgress: true,
+        speed: 800,
+        grid: {
+            rows: 10,
+            fill: 'row'
+        },
+        navigation: {
+            prevEl: individSec.querySelector(".nav-btn--prev"),
+            nextEl: individSec.querySelector(".nav-btn--next"),
+        },
+        breakpoints: {
+            1250.98: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+            },
+            767.98: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+            },
+            575.98: {
+                slidesPerView: 3,
+                spaceBetween: 16,
+            },
+        },
+    })
+}
+//org swiper
+const orgSec = document.querySelector(".org-sec")
+if (orgSec) {
+    new Swiper(orgSec.querySelector(".swiper"), {
+        slidesPerView: 1,
+        spaceBetween: 16,
+        observer: true,
+        observeParents: true,
+        watchSlidesProgress: true,
+        speed: 800,
+        grid: {
+            rows: 3,
+            fill: 'row'
+        },
+        navigation: {
+            prevEl: orgSec.querySelector(".nav-btn--prev"),
+            nextEl: orgSec.querySelector(".nav-btn--next"),
+        },
+        breakpoints: {
+            767.98: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            480.98: {
+                slidesPerView: 2,
+                spaceBetween: 16,
+            },
+        },
+    })
+}
+//gallery
+const gallery = document.querySelector(".gallery")
+if (gallery) {
+    const gallCurrent = gallery.querySelector("[data-slide-current]")
+    const gallTotal = gallery.querySelector("[data-slide-total]")
+    let gallSlidesCount = gallery.querySelectorAll(".swiper-slide").length
+    new Swiper(gallery.querySelector(".swiper"), {
+        slidesPerView: 1,
+        spaceBetween: 16,
+        observer: true,
+        observeParents: true,
+        watchSlidesProgress: true,
+        speed: 800,
+        navigation: {
+            prevEl: gallery.querySelector(".nav-btn--prev"),
+            nextEl: gallery.querySelector(".nav-btn--next"),
+        },
+        breakpoints: {
+            1250.98: {
+                slidesPerView: "auto",
+                spaceBetween: 20,
+            },
+            767.98: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+            },
+            480.98: {
+                slidesPerView: 2,
+                spaceBetween: 16,
+            },
+        },
+        on: {
+            slideChange: (swiper) => {
+                let thisSlide = swiper.activeIndex + 1
+                if (gallCurrent) {
+                    gallCurrent.textContent = thisSlide < 10 ? "0" + thisSlide : thisSlide
+                }
+            }
+        }
 
+    })
+    if (gallTotal) {
+        gallTotal.textContent = gallSlidesCount < 10 ? "0" + gallSlidesCount : gallSlidesCount
+    }
+
+}
+//editions line
+const editionRow = document.querySelector(".editions__row")
+const itemEdition = document.querySelectorAll(".item-edition")
+const line = document.querySelector('.editions__line');
+if (editionRow && line && itemEdition.length && itemEdition.length % 3 === 0 && itemEdition.length % 2 !== 0) {
+    function editionsLine() {
+        let winW = window.innerWidth
+        if (winW < bp.desktop && winW > bp.phone) {
+            editionRow.classList.add("extra-item")
+            const lastItem = itemEdition[itemEdition.length - 1];
+            const rectBounds = lastItem.getBoundingClientRect();
+            let topLeft = { x: rectBounds.left, y: rectBounds.top };
+            let bottomRight = { x: rectBounds.right, y: rectBounds.bottom };
+            let length = Math.sqrt(
+                Math.pow(bottomRight.x - topLeft.x, 2) +
+                Math.pow(bottomRight.y - topLeft.y, 2)
+            );
+            const angle = Math.atan2(
+                bottomRight.y - topLeft.y,
+                bottomRight.x - topLeft.x
+            ) * 180 / Math.PI;
+            line.style.width = length + 'px';
+            line.style.transform = `rotate(${-angle}deg) translateY(-100%)`;
+
+        } else {
+            editionRow.classList.remove("extra-item")
+        }
+    }
+    editionsLine()
+    const editionDebounce = debounce(editionsLine, 300)
+    window.addEventListener("resize", editionDebounce);
+}
+const pageUp = document.querySelector(".page-up")
+if (pageUp) {
+    pageUp.addEventListener("click", () => window.scrollTo({ top: 0, behavior: 'smooth' }))
+}
