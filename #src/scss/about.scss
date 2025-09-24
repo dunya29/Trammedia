@@ -77,9 +77,9 @@
 }
 .item-inst {
 	height: 267px;
-	position: relative;
 	padding: 14px;
 	margin: 1px;
+	position: relative;
 	&:after {
 		content: "";
 		display: block;
@@ -127,25 +127,7 @@
 		}
 	}
 	&__content {
-		background: var(--light-gray-color);
-		padding: 14px;
-		p,
-		li {
-			font-size: 14px;
-		}
-	}
-	@media (min-width: $bp4) {
-		&__content {
-			position: absolute;
-			top: 100%;
-			left: 0;
-			width: 100%;
-			visibility: hidden;
-			opacity: 0;
-			transition: all 0.5s ease;
-			z-index: 1;
-			transform: translateY(30px);
-		}
+		display: none;
 	}
 	@media (max-width: $bp2) {
 		height: 232px;
@@ -163,18 +145,12 @@
 			left: 7px;
 			right: 7px;
 		}
-		.item-inst__content {
-			display: none;
-		}
 		&__logo {
 			padding: 10px 8px;
 			.media-contain {
 				max-width: 180px;
 				max-height: 52px;
 			}
-		}
-		&__content {
-			padding: 0;
 		}
 	}
 }

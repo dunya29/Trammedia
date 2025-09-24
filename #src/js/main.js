@@ -366,32 +366,10 @@ if (document.querySelector(".authors__swiper")) {
 // institutions on hover || click
 const instItem = document.querySelectorAll('.item-inst')
 if (instItem.length) {
-    function enter(content) {
-        if (window.innerWidth > bp.tablet && !content.classList.contains("show")) {
-            content.classList.add("show")
-            let diff = content.getBoundingClientRect().bottom - window.innerHeight
-            if (diff > 50) {
-                window.scrollTo({
-                    top: scrollPos() + diff,
-                    left: 0,
-                    behavior: "smooth",
-                })
-            }
-
-        }
-    }
-    function leave(content) {
-        content.classList.remove("show")
-    }
     instItem.forEach(item => {
-        const content = item.querySelector(".item-inst__content")
-        item.addEventListener("mouseenter", () => enter(content));
-        item.addEventListener("mouseleave", () => leave(content));
-        item.addEventListener("click", (event) => {
-            if (window.innerWidth < bp.tablet) {
-                document.querySelector("#inst-modal .inst-modal__inner").innerHTML = item.innerHTML
-                openModal(document.querySelector("#inst-modal"))
-            }
+        item.addEventListener("click", () => {
+            document.querySelector("#inst-modal .inst-modal__inner").innerHTML = item.innerHTML
+            openModal(document.querySelector("#inst-modal"))
         })
     })
 }
@@ -426,7 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 pin: true,
                 scrub: true,
                 invalidateOnRefresh: true,
-                onUpdate: (self) => {
+                onUpdate: () => {
                     authorsMainSwiper.slideTo(Math.round(activeIndex.value))
                 },
             }
@@ -436,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("load", () => {
     ScrollTrigger.refresh(true)
 });
-window.addEventListener("resize", debounce(() => ScrollTrigger.refresh(true), 1000));
+window.addEventListener("resize", debounce(() => ScrollTrigger.refresh(true), 500));
 function imgLazyLoad(timeout) {
     let lazyImages = document.querySelectorAll("img[loading='lazy']")
     let debouncedLog = debounce(() => ScrollTrigger.refresh(true), timeout || 1000);
@@ -446,7 +424,7 @@ function imgLazyLoad(timeout) {
     lazyImages.forEach(img => {
         img.complete ? onImgLoad() : img.addEventListener("load", onImgLoad);
     });
-} 
+}
 imgLazyLoad();
 //individ swiper
 const individSec = document.querySelector(".individ-sec")
@@ -512,7 +490,7 @@ if (orgSec) {
         },
     })
 }
-//gallery
+//gallery swiper
 const gallery = document.querySelector(".gallery")
 if (gallery) {
     const gallCurrent = gallery.querySelector("[data-slide-current]")
@@ -590,6 +568,7 @@ if (editionRow && line && itemEdition.length && itemEdition.length % 3 === 0 && 
     const editionDebounce = debounce(editionsLine, 300)
     window.addEventListener("resize", editionDebounce);
 }
+// pageUp
 const pageUp = document.querySelector(".page-up")
 if (pageUp) {
     pageUp.addEventListener("click", () => window.scrollTo({ top: 0, behavior: 'smooth' }))

@@ -313,7 +313,7 @@ body {
   line-height: 1.2;
   color: var(--primary-color);
   min-width: 320px;
-  background: #1d1d1b;
+  background: var(--light-gray-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
@@ -324,7 +324,6 @@ body {
 
 .wrap {
   min-height: 100%;
-  background: var(--light-gray-color);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -332,23 +331,6 @@ body {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  /* 	&.animate {
-  	position: fixed;
-  	top: 0;
-  	left: 0;
-  	width: 100%;
-  	transform-style: preserve-3d;
-  	perspective: 2000px;
-  	will-change: transform;
-  	transform-origin: 50% 10%;
-  	transform: translate3d(0px, 25vw, 0px) scale3d(0.4, 0.4, 1) rotateX(0deg) rotateY(0deg) rotateZ(720deg);
-  	transition: all 1s ease-in-out;
-  }
-  @media (max-width: $bp4) {
-  	&.animate {
-  		transform: translate3d(0px, 95vh, 0px) ;
-  	}
-  } */
 }
 
 .no-scroll {
@@ -695,8 +677,8 @@ blockquote footer p {
 }
 
 .btn-cross {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   position: relative;
 }
 
@@ -1702,9 +1684,9 @@ blockquote footer p {
 
 .item-inst {
   height: 267px;
-  position: relative;
   padding: 14px;
   margin: 1px;
+  position: relative;
 }
 
 .item-inst:after {
@@ -1757,13 +1739,7 @@ blockquote footer p {
 }
 
 .item-inst__content {
-  background: var(--light-gray-color);
-  padding: 14px;
-}
-
-.item-inst__content p,
-.item-inst__content li {
-  font-size: 14px;
+  display: none;
 }
 
 .authors .no-photo {
@@ -1961,7 +1937,7 @@ blockquote footer p {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
   left: 0;
@@ -2004,7 +1980,7 @@ blockquote footer p {
 
 .modal__content {
   width: 100%;
-  max-width: 640px;
+  max-width: 800px;
   padding: 40px 48px;
   margin: auto;
   background: var(--light-gray-color);
@@ -2027,13 +2003,7 @@ blockquote footer p {
 }
 
 .inst-modal .item-inst__content {
-  padding: 0;
-  position: static;
-  visibility: visible;
-  opacity: 1;
-  -webkit-transform: none;
-  -ms-transform: none;
-  transform: none;
+  display: block;
 }
 
 .footer__top {
@@ -2148,21 +2118,6 @@ blockquote footer p {
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
     break-inside: avoid;
-  }
-
-  .item-inst__content {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    visibility: hidden;
-    opacity: 0;
-    -webkit-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-    z-index: 1;
-    -webkit-transform: translateY(30px);
-    -ms-transform: translateY(30px);
-    transform: translateY(30px);
   }
 }
 
@@ -2452,6 +2407,15 @@ blockquote footer p {
   .item-gall .media-cover {
     padding-top: 87.44%;
     margin-bottom: 14px;
+  }
+
+  .modal .btn-cross.modal__close {
+    width: 20px;
+    height: 20px;
+  }
+
+  .modal__content {
+    max-width: 640px;
   }
 }
 
@@ -2873,10 +2837,6 @@ blockquote footer p {
     right: 7px;
   }
 
-  .item-inst .item-inst__content {
-    display: none;
-  }
-
   .item-inst__logo {
     padding: 10px 8px;
   }
@@ -2884,10 +2844,6 @@ blockquote footer p {
   .item-inst__logo .media-contain {
     max-width: 180px;
     max-height: 52px;
-  }
-
-  .item-inst__content {
-    padding: 0;
   }
 
   .authors__thumbswiper .swiper-slide {
