@@ -415,7 +415,7 @@
                                     <div class="content-shift map-sec__tram">
                                         <!--map-acc-->
 <div class="accordion map-acc" aria-expanded="false">
-    <div class="accordion__header" role="button">
+    <div class="accordion__header" role="button" data-tram-id="1">
         <h4>Маршрут №5</h4>
     </div>
     <div class="accordion__body" aria-hidden="true">
@@ -429,7 +429,7 @@
 </div>
                                         <!--map-acc-->
 <div class="accordion map-acc" aria-expanded="false">
-    <div class="accordion__header" role="button">
+    <div class="accordion__header" role="button" data-tram-id="2">
         <h4>Маршрут №6</h4>
     </div>
     <div class="accordion__body" aria-hidden="true">
@@ -443,7 +443,7 @@
 </div>
                                         <!--map-acc-->
 <div class="accordion map-acc" aria-expanded="false">
-    <div class="accordion__header" role="button">
+    <div class="accordion__header" role="button" data-tram-id="3">
         <h4>Маршрут №7</h4>
     </div>
     <div class="accordion__body" aria-hidden="true">
@@ -457,7 +457,7 @@
 </div>
                                         <!--map-acc-->
 <div class="accordion map-acc" aria-expanded="false">
-    <div class="accordion__header" role="button">
+    <div class="accordion__header" role="button" data-tram-id="4">
         <h4>Маршрут №3</h4>
     </div>
     <div class="accordion__body" aria-hidden="true">
@@ -471,7 +471,7 @@
 </div>
                                         <!--map-acc-->
 <div class="accordion map-acc" aria-expanded="false">
-    <div class="accordion__header" role="button">
+    <div class="accordion__header" role="button" data-tram-id="5">
         <h4>Маршрут №8</h4>
     </div>
     <div class="accordion__body" aria-hidden="true">
@@ -1628,6 +1628,7 @@
 </script>
 <script>
     const locDistricts = document.querySelectorAll("[data-district-id]")
+    const tramItems = document.querySelectorAll("[data-tram-id]")
     const switchMapLocBtn = document.querySelector("[data-tab=loc]")
     const switchMapTramBtn = document.querySelector("[data-tab=tram]")
     let center = [56.326797, 44.006516];  
@@ -1638,6 +1639,7 @@
     let maxZoom = 15
     let tramColors = ['#8A2A2B', '#EAC637', '#606484', '#698460', '#E00101']
     let isPlacemarkOnClick = false
+    let isRouteOnClick = false
     function setmapDefaults(map) {
         map.controls.remove('geolocationControl'); // удаляем геолокацию
         map.controls.remove('searchControl'); // удаляем поиск
@@ -1648,10 +1650,16 @@
         map.controls.remove('zoomControl');
         map.margin.setDefaultMargin(100);
     }   
-    function placemarkOnClick(districtId,id) {
+    function placemarkOnClick(districtId) {
         const districtItem = document.querySelector(`[data-district-id='${districtId}']`)
         if (districtItem && !districtItem.classList.contains("active") ) {
             districtItem.click()
+        }     
+    } 
+    function routeOnClick(routeId) {
+        const routeItem = document.querySelector(`[data-tram-id='${routeId}']`)
+        if (routeItem && !routeItem.classList.contains("active") ) {
+            routeItem.click()
         }     
     } 
     function locMapInit() {
@@ -1795,6 +1803,8 @@
                 panelMaxMapArea: window.innerWidth < 767.98 ? Infinity : 0,
                 offset: [75,50]
             }); 
+            routeOnClick(thisRoute.id)
+            isRouteOnClick = true
         }); 
     }        
     function tramMapInit() {
@@ -1825,14 +1835,41 @@
                 zoomMargin: 100
             });
         });
-    tramMap.events.add('click', function(e) {
-    const target = e.get('target');
-    // Если клик не по нашему объекту - отменяем
-    if (!target || !target.properties || !target.properties.get('isOurObject')) {
-        e.preventDefault();
-        return false;
-    }
-});
+        tramMap.events.add('click',()=> tramMap.balloon.close())
+        if (tramItems.length) {
+            tramItems.forEach(item => {
+                item.addEventListener("click", e => {
+                    if (!isRouteOnClick) {
+                        tramMap.balloon.close()    
+                        if (!item.classList.contains("active")) {
+                            let id = Number(item.getAttribute("data-tram-id"))
+                            let findTram = tramRoutes.find(item => Number(item['id']) === id)
+                            if (findTram && findTram.stations.length) {
+                                let pointsList = findTram.stations.map(item => item.coords)
+                                if (pointsList.length) {
+                                    tramMap.setBounds(ymaps.util.bounds.fromPoints(pointsList), {
+                                        checkZoomRange: true,
+                                    }).then(function(){ if(locMap.getZoom() > maxZoom) locMap.setZoom(maxZoom)});
+                                }  
+                            }                       
+                        } else { 
+                            let pointsList = []
+                            tramRoutes.forEach(item => {
+                                if (item.stations.length) {
+                                    item.stations.forEach(station => pointsList.push(station.coords))
+                                }
+                            })
+                            if (pointsList.length) {
+                                tramMap.setBounds(ymaps.util.bounds.fromPoints(pointsList), {
+                                    checkZoomRange: true,
+                                }).then(function(){ if(locMap.getZoom() > maxZoom) locMap.setZoom(maxZoom)});
+                            }
+                        }  
+                    }                      
+                    isRouteOnClick = false                               
+                })
+            })                
+        }     
     }
     if (document.querySelector("#loc-map") && document.querySelector("#tram-map")) {
         ymaps.ready(() => {
