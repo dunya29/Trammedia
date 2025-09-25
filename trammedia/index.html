@@ -1719,13 +1719,15 @@
             locMapInit()
         });
         let mapTimeout
+        let winW
         window.addEventListener("resize", () => {
             clearTimeout(mapTimeout)
-            if (locMap) {
-                locMap.destroy()
-            }
             mapTimeout = setTimeout(() => {
-                locMapInit()
+                if (winW != window.innerWidth && locMap) {
+                    locMap.destroy()
+                    locMapInit()
+                }
+                winW = window.innerWidth
             }, 300);
         })
     }
