@@ -1537,10 +1537,6 @@ blockquote footer p {
   color: var(--light-gray-color);
 }
 
-.map-sec__lbl {
-  color: var(--gray-color);
-}
-
 .map-sec [data-block] {
   height: 0;
   display: block !important;
@@ -2685,10 +2681,6 @@ blockquote footer p {
   .item-edition__img {
     width: 211px;
     height: 305px;
-  }
-
-  .map-sec__lbl {
-    display: none;
   }
 
   .marathon__date {
