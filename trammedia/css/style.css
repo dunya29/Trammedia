@@ -1378,7 +1378,11 @@ blockquote footer p {
   margin-bottom: 14px;
 }
 
-.map-acc__content {
+.map-acc .text-btn {
+  margin-top: 20px;
+}
+
+.map-acc__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
@@ -2931,7 +2935,7 @@ blockquote footer p {
 }
 
 @media (max-width: 575.98px) {
-  .map-acc__content {
+  .map-acc__row {
     grid-template-columns: 1fr;
   }
 

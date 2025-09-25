@@ -1,14 +1,20 @@
 <!--map-acc-->
 <div class="accordion map-acc" aria-expanded="false">
-    <div class="accordion__header" role="button" data-tram-id="@@nmb">
+    <div class="accordion__header" role="button">
         <h4>@@title</h4>
     </div>
     <div class="accordion__body" aria-hidden="true">
         <div class="accordion__content map-acc__content">
-            <div class="map-acc__info">
-                <p>Кольцевой маршрут: <span>Тоннель Московского вокзала</span></p>
-                <p>Интервал: <span>Каждые 15 минут, c 12:17 до 16:09</span></p>
+            <div class="map-acc__row">
+                <div class="map-acc__info">
+                    <p>Кольцевой маршрут: <span>Тоннель Московского вокзала</span></p>
+                    <p>Интервал: <span>Каждые 15 минут, c 12:17 до 16:09</span></p>
+                </div>
             </div>
+            <a class="btn text-btn" href="@@link" target="_blank">
+                <span>Подробнее</span>
+                <svg><use xlink:href="img/svg/sprite.svg#ext-link"></use></svg>
+            </a>
         </div>
     </div>
 </div>
