@@ -468,7 +468,7 @@ blockquote {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
-	margin: 0 -20px 0;
+	margin: 0 -20px 5px;
 	span,
 	a,
 	button {
@@ -494,7 +494,7 @@ blockquote {
 		}
 	}
 	@media (max-width: $bp2) {
-		margin: 0 -10px 10px;
+		margin: 0 -10px 15px;
 		span,
 		a,
 		button {

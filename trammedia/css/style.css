@@ -765,7 +765,7 @@ blockquote footer p {
   align-items: center;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin: 0 -20px 0;
+  margin: 0 -20px 5px;
 }
 
 .tabs span,
@@ -1533,6 +1533,10 @@ blockquote footer p {
   color: var(--light-gray-color);
 }
 
+.map-sec__lbl {
+  color: var(--gray-color);
+}
+
 .map-sec [data-block] {
   height: 0;
   display: block !important;
@@ -2287,7 +2291,7 @@ blockquote footer p {
   }
 
   .tabs {
-    margin: 0 -10px 10px;
+    margin: 0 -10px 15px;
   }
 
   .tabs span,
@@ -2677,6 +2681,10 @@ blockquote footer p {
   .item-edition__img {
     width: 211px;
     height: 305px;
+  }
+
+  .map-sec__lbl {
+    display: none;
   }
 
   .marathon__date {

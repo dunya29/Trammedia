@@ -129,6 +129,9 @@
                         <div class="sec-top">
                             <h2>Точки дистрибуции</h2>
                         </div>
+                        <div class="map-sec__map">
+                            <div class="map" id="loc-map"></div>
+                        </div>
                         <div class="switch-block">
                             <div class="tabs">
                                 <button class="h4 active" data-tab="loc">Локации</button>
@@ -136,29 +139,29 @@
                             </div>
                             <div class="map-sec__blocks">
                                 <div class="map-sec__block active" data-block="loc">
-                                    <div class="map-sec__map">
-                                        <div class="map" id="loc-map"></div>
-                                    </div>                                   
-                                    <div class="content-shift map-sec__loc">
-                                        @@include("_map-loc-acc.html", {"nmb":"1", "title": "Автозаводский район"})
-                                        @@include("_map-loc-acc.html", {"nmb":"2", "title": "Канавинский район"})
-                                        @@include("_map-loc-acc.html", {"nmb":"3", "title": "Ленинский район"})
-                                        @@include("_map-loc-acc.html", {"nmb":"4", "title": "Московский район"})
-                                        @@include("_map-loc-acc.html", {"nmb":"5", "title": "Приокский район"})
-                                        @@include("_map-loc-acc.html", {"nmb":"6", "title": "Советский район"})
-                                        @@include("_map-loc-acc.html", {"nmb":"7", "title": "Сормовский район"})
+                                    <div class="page-grid">
+                                        <span class="h4 map-sec__lbl">(7)</span>
+                                        <div class="map-sec__loc">
+                                            @@include("_map-loc-acc.html", {"nmb":"1", "title": "Автозаводский район"})
+                                            @@include("_map-loc-acc.html", {"nmb":"2", "title": "Канавинский район"})
+                                            @@include("_map-loc-acc.html", {"nmb":"3", "title": "Ленинский район"})
+                                            @@include("_map-loc-acc.html", {"nmb":"4", "title": "Московский район"})
+                                            @@include("_map-loc-acc.html", {"nmb":"5", "title": "Приокский район"})
+                                            @@include("_map-loc-acc.html", {"nmb":"6", "title": "Советский район"})
+                                            @@include("_map-loc-acc.html", {"nmb":"7", "title": "Сормовский район"})
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="map-sec__block" data-block="tram">
-                                    <div class="map-sec__map">
-                                        <div class="map" id="tram-map"></div>
-                                    </div>                                
-                                    <div class="content-shift map-sec__tram">
-                                        @@include("_map-tram-acc.html", {"nmb":"1", "title": "Маршрут №5"})
-                                        @@include("_map-tram-acc.html", {"nmb":"2", "title": "Маршрут №6"})
-                                        @@include("_map-tram-acc.html", {"nmb":"3", "title": "Маршрут №7"})
-                                        @@include("_map-tram-acc.html", {"nmb":"4", "title": "Маршрут №3"})
-                                        @@include("_map-tram-acc.html", {"nmb":"5", "title": "Маршрут №8"})
+                                    <div class="page-grid">
+                                        <span class="h4 map-sec__lbl">(5)</span>
+                                        <div class="map-sec__tram">
+                                            @@include("_map-tram-acc.html", {"nmb":"1", "title": "Маршрут №5"})
+                                            @@include("_map-tram-acc.html", {"nmb":"2", "title": "Маршрут №6"})
+                                            @@include("_map-tram-acc.html", {"nmb":"3", "title": "Маршрут №7"})
+                                            @@include("_map-tram-acc.html", {"nmb":"4", "title": "Маршрут №3"})
+                                            @@include("_map-tram-acc.html", {"nmb":"5", "title": "Маршрут №8"})
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -604,7 +607,7 @@
             @@include('_modal.html')
         </div>
         @@include('_js.html')
-          @@include('_map.html')
+        @@include('_map.html')
     </body>
 
 </html>

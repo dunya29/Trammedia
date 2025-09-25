@@ -121,6 +121,9 @@
             }
         }
     }
+    &__lbl {
+        color: var(--gray-color);
+    }
     [data-block] {
         height: 0;
         display: block !important;
@@ -158,6 +161,11 @@
     @media (max-width: $bp2) {
         &__map {
             height: 380px;
+        }
+    }
+    @media (max-width: $bp3) {
+        &__lbl {
+            display: none;
         }
     }
     @media (max-width: $bp4) {
